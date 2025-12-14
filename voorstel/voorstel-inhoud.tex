@@ -1,84 +1,145 @@
-%---------- Inleiding ---------------------------------------------------------
+\paragraph{Opmerking}
 
-% TODO: Is dit voorstel gebaseerd op een paper van Research Methods die je
-% vorig jaar hebt ingediend? Heb je daarbij eventueel samengewerkt met een
-% andere student?
-% Zo ja, haal dan de tekst hieronder uit commentaar en pas aan.
+Dit voorstel is gebaseerd op het onderzoeksvoorstel dat werd geschreven in het kader van het vak Research Methods dat ik vorig academiejaar heb uitgewerkt met medestudent Alvaro Van Damme als mede-auteur.
 
-%\paragraph{Opmerking}
-
-% Dit voorstel is gebaseerd op het onderzoeksvoorstel dat werd geschreven in het
-% kader van het vak Research Methods dat ik (vorig/dit) academiejaar heb
-% uitgewerkt (met medesturent VOORNAAM NAAM als mede-auteur).
-% 
-
-\section{Inleiding}%
+\section{Inleiding}
 \label{sec:inleiding}
 
-Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
+In de hedendaagse wereld spelen mediabedrijven een cruciale rol in het bieden van informatie. Het is van groot belang dat deze informatie op een objectieve wijze gedeeld wordt, maar de realiteit blijkt niet aan onze verwachtingen te voldoen. Het onpartijdigheidsrapport van de Vlaamse Regulator voor de Media toont aan dat VTM Nieuws, onderdeel van DPG Media, in haar berichtgeving bepaalde politieke partijen meer spreektijd geeft dan andere \autocite{VanAelst2024}. Tegelijkertijd heeft Het Laatste Nieuws, ook onderdeel van DPG Media, volgens dagelijkse rapporten gepubliceerd door het \textcite{CIM2025} al jaren het grootste bereik onder de Vlaamse nieuwswebsites.
+
+Wanneer nieuws niet op neutrale wijze wordt weergegeven, kan dit bijdragen aan een afnemend vertrouwen in de traditionele media \autocite{Hanjia2024}. Bovendien wordt nieuws sneller aangenomen als waarheid wanneer dit hun persoonlijke overtuigingen bevestigt \autocite{Schwalbe2024}. Deze vaststellingen tonen aan dat er nood is aan onderzoek naar automatische detectiesystemen voor journalistieke bias.
+
+Dit onderzoek richt zich op het ontwikkelen van een browserextensie die geopende nieuwsartikelen op de website van Het Laatste Nieuws (HLN) automatisch analyseert en classificeert op basis van hun partijdigheid. Deze extensie is gericht op lezers van HLN die twijfelen aan de neutraliteit van de berichtgeving en die zich bewust willen worden van de mogelijke vooringenomenheid in hun dagelijkse nieuwsconsumptie.
+
+De centrale onderzoeksvraag luidt: Hoe kan een browserextensie ontwikkeld worden die artikelen van Het Laatste Nieuws automatisch classificeert op basis van hun partijdigheid, met minimale impact op de gebruikservaring? Om deze hoofdonderzoeksvraag te beantwoorden, zijn volgende deelvragen geformuleerd:
 
 \begin{itemize}
-  \item kaderen thema
-  \item de doelgroep
-  \item de probleemstelling en (centrale) onderzoeksvraag
-  \item de onderzoeksdoelstelling
+    \item Welke vormen van journalistieke bias komen voor in nieuwsartikelen?
+    \item Welke linguïstische kenmerken duiden op partijdigheid?
+    \item Welke bestaande methoden kunnen toegepast worden om bias in teksten te detecteren?
+    \item Op welke wijze kan de semantische betekenis van woorden behouden tijdens het classificeren?
 \end{itemize}
 
-Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
+Het doel van dit onderzoek is het ontwerpen van een Proof-of-Concept die automatische detectie en classificatie van partijdigheid in nieuwsartikelen realiseert en integreert in een gebruiksvriendelijke browserextensie. De betrouwbaarheid en gebruikservaring van deze Proof-of-Con\-cept zullen geëvalueerd worden aan de hand van testen.
 
-De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
-
-Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
-
-Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
-
-%---------- Stand van zaken ---------------------------------------------------
-
-\section{Literatuurstudie}%
+\section{Literatuurstudie}
 \label{sec:literatuurstudie}
 
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
+\subsection{Vormen van journalistieke vooringenomenheid}
 
-Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
+Inzicht in de verschillende vormen van journalistieke bias en hoe deze geïdentificeerd kunnen worden, is een essentieel onderdeel van dit onderzoek.
 
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
+\subsubsection{Ideology bias en spin bias}
 
-Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
+Volgens \textcite{Mullainathan2002} kan journalistieke bias onderverdeeld worden in twee categorieën: \textit{ideology bias} en \textit{spin bias}. 
 
-Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
+Bij \textit{ideology bias} wordt de inhoud van een artikel in bepaalde ideologische richtingen gestuurd. In veel gevallen reflecteert deze vorm van partijdigheid de voorkeuren van het mediabedrijf en haar doelgroep \autocite{Mullainathan2002}. Het sturen van nieuwsartikelen in bepaalde politieke richtingen is ook waargenomen bij VTM Nieuws, in het onpartijdigheidsrapport gepubliceerd door de Vlaamse Regulator voor de Media \autocite{VanAelst2024}.
 
-% Voor literatuurverwijzingen zijn er twee belangrijke commando's:
-% \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
-%   geen onderdeel is van de zin.
-% \textcite{KEY} => Auteur (jaartal)  Gebruik dit als de auteursnaam wel een
-%   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
-%   ...'')
+In het geval van \textit{spin bias} wordt informatie in een artikel gemanipuleerd met als doel het artikel opvallender of sensationeler te maken. Door concurrentie tussen nieuwsorganisaties worden journalisten aangemoedigd om opvallende artikelen te schrijven, wat bereikt kan worden door feiten te verdraaien of te overdrijven \autocite{Alsem2008}. Er is momenteel nog geen onderzoek uitgevoerd naar het aandeel van \textit{spin bias} in artikelen gepubliceerd door Het Laatste Nieuws.
 
-Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
+\subsubsection{Gatekeeping, coverage bias en state\-ment bias}
 
-%---------- Methodologie ------------------------------------------------------
-\section{Methodologie}%
+\textcite{SaezTrumper2013} verdeelt journalistie\-ke bias in drie andere categorieën: \textit{gatekeeping}, \textit{coverage bias} en \textit{statement bias}.
+
+\textit{Gatekeeping}, ook wel \textit{selection bias} genoemd, wordt door \textcite{CALD2025} gedefinieerd als het bepalen van wie bepaalde informatie, macht of kansen krijgt. Hierbij kiest de auteur een specifieke selectie van informatie voor het artikel en laat andere informatie achterwege. Dit komt vaak voor in kranten, waar auteurs gedwongen worden om een selectie van informatie te maken vanwege de beperkte ruimte \autocite{SaezTrumper2013}.
+
+Bij \textit{coverage bias} wordt meer aandacht toegekend aan bepaalde onderdelen in vergelijking met andere \autocite{DAlessio2006}. Deze extra aandacht kan zich uiten in meer zendtijd op televisie, meer spreektijd op de radio of meer tekst in artikelen.
+
+\textit{Statement bias}, ook wel \textit{presentation bias} genoemd, verwijst naar het gunstiger omschrijven van bepaalde onderdelen ten koste van andere onderdelen \autocite{SaezTrumper2013}. Een mediabericht dat evenveel uitspraken bevat die in de ene richting voordelig zijn als uitspraken die in de tegenovergestelde richting voordelig zijn, kan als neutraal worden beschouwd \autocite{DAlessio2006}.
+
+Voor deze vormen van bias is nog geen onderzoek uitgevoerd naar het aandeel ervan in artikelen van HLN. Het kan echter worden aangenomen dat deze ook aanwezig zijn in artikelen van Het Laatste Nieuws. Deze aanname wordt ondersteund door twee bevindingen:
+
+\begin{itemize}
+    \item Volgens \textcite{RodrigoGines2024} wordt media bias steeds meer zichtbaar door de verspreiding van sociale media.
+    \item Uit een steekproef van \textcite{Neveneffecten2011} blijkt dat bronnen in krantenartikelen onvoldoende of niet worden gecontroleerd.
+\end{itemize}
+
+\subsection{Methoden om bias te detecteren}
+
+Om artikelen op basis van partijdigheid te classificeren, is het belangrijk om bias in een artikel te kunnen detecteren. Dit kan bereikt worden met technieken uit het domein van \textit{Natural Language Processing} (NLP).
+
+Een van de methoden om artikelen te classificeren op basis van partijdigheid is \textit{supervised learning}, waarbij modellen getraind worden op gelabelde data. Vaak wordt gebruik gemaakt van neurale tekstclassificatoren zoals \textit{Bidirectional Encoder Representations from Transformers} (BERT). BERT is een complexe architectuur die contextuele representaties van teksten kan genereren en heeft zich al bewezen als een succesvolle methode voor NLP-taken \autocite{Baly2020}. In het onderzoek van \textcite{Baly2020} werd een biasclassificatiemodel op basis van BERT ontwikkeld. Het model werd getest op artikelen uit kranten die niet in de trainingsset waren opgenomen, om te voorkomen dat de nieuwsbron herkend zou worden en de classificatie zou beïnvloeden. In dit onderzoek zal hier geen rekening mee gehouden worden, aangezien het beperkt is tot één enkele nieuwsbron.
+
+Een andere methode die gebruikt kan worden is \textit{unsupervised learning}, waarbij de dataset niet gelabeld is. Hierbij wordt vaak gebruik gemaakt van vectorisatiemethoden in combinatie met clusteringalgoritmen \autocite{UmarNadeem2022}. Uit een onderzoek van \textcite{UmarNadeem2022} werd geconcludeerd dat deze methode niet effectief is voor het vinden van tekstpatronen. Aangezien deze patronen essentieel zijn voor het detecteren van bias, wordt deze methode als niet effectief beschouwd.
+
+Een derde methode die relevant zou kunnen zijn binnen ons onderzoek is \textit{sentimentanalyse}. Deze techniek richt zich op het identificeren van toon in teksten en kan beoordelen of deze positief, negatief of neutraal is \autocite{Cui2025}. Hoewel deze methode mogelijk niet voldoende is om alle vormen van bias te detecteren, kan het wel in combinatie met een \textit{supervised learning} techniek zoals BERT gebruikt worden om betere resultaten te bereiken.
+
+\subsection{Methodes om tekst te extraheren uit een webpagina}
+
+Voor de ontwikkeling van de browserextensie is het noodzakelijk om de tekst van geopende nieuwsartikelen op de HLN-website te kunnen extraheren. Een veelgebruikte methode hiervoor is het doorlopen van de \textit{Document Object Model} (DOM)-structuur van de webpagina \autocite{GCD2012}. Het DOM vormt een hiërarchische representatie van alle elementen op een webpagina en maakt het mogelijk om deze elementen dynamisch te lezen en te wijzigen. Moderne websites gedragen zich doorgaans consistent binnen verschillende browsers, waardoor het element dat de hoofdinhoud bevat meestal kan worden geïdentificeerd als het element met het grootste tekstvolume op een vergelijkbare diepte in de DOM-structuur \autocite{Aleksandersen2018}.
+
+Hoewel er alternatieve methodes bestaan om tekstextractie te bereiken, wordt dit onderzoek beperkt tot het gebruik van het DOM. De keuze wordt gemotiveerd door het feit dat dit een goed ondersteunde methode is binnen de meest gebruikte browsers.
+
+\subsection{Methodes om semantische betekenis te behouden}
+
+Het behoud van semantische betekenis van woorden is cruciaal binnen dit onderzoek. Een veelgebruikte methode hiervoor is het gebruik van woordembeddings, waarbij woorden worden omgezet in vectorrepresentaties. Volgens \textcite{Akbik2018} kan binnen deze benadering onderscheid worden gemaakt tussen klassieke en contextuele woordembeddings.
+
+Klassieke woordembeddings koppelen ieder woord aan één vaste vector, onafhankelijk van de context waarin het voorkomt. Een bekende techniek binnen deze categorie is \textit{Global Vectors} (GloVe), dat globale corpusstatistieken gebruikt in combinatie met \textit{unsupervised learning} om woorden in een vectorruimte te representeren \autocite{Pennington2014}. Deze modellen kunnen semantische relaties vastleggen, maar houden geen rekening met contextuele betekenissen van individuele woorden.
+
+Om ook contextuele informatie te behouden binnen een vectorrepresentatie, kunnen contextuele woordembeddings worden gebruikt. Deze embeddings genereren representaties die afhankelijk zijn van de context waarin een woord voorkomt binnen een zin \autocite{Akbik2018}. Een belangrijke techniek binnen deze categorie is het gebruik van transformer-gebaseerde representaties zoals BERT \autocite{Khodake2020}, die contextuele informatie kunnen vasthouden in een vectorrepresentatie.
+
+Een andere relevante techniek is het gebruik van \textit{Embeddings from Language Models} (ELMo), waarbij vectorrepresentaties van woorden worden afgeleid uit een bidirectioneel \textit{Long Short-Term Memory}-taalmodel \autocite{Peters2018}. ELMo combineert informatie uit alle interne lagen van het taalmodel tot een gewogen vectorrepresentatie voor elk woord, waardoor zowel semantische als contextuele betekenissen van woorden kunnen worden vastgelegd.
+
+Er bestaan nog andere methoden om semantische betekenis van woorden te behouden, maar deze worden niet opgenomen in deze literatuurstudie.
+
+\section{Methodologie}
 \label{sec:methodologie}
 
-Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor literatuurstudie, interviews met belanghebbenden (bv.~voor requirements-analyse), experimenten, simulaties, vergelijkende studie, risico-analyse, PoC, \ldots?
+Dit onderzoek volgt een Agile werkwijze waarbij literatuurstudie, ontwerp, evaluatie en rapportering elkaar afwisselen. De methodologie is gericht op het systematisch verzamelen van kennis, het ontwikkelen van een Proof-of-Concept (PoC), het uitvoeren van experimenten en het verwerken van de resultaten. De volledige tijdsplanning wordt weergegeven in Figuur \ref{fig:gantt}.
 
-Valt je onderwerp onder één van de typische soorten bachelorproeven die besproken zijn in de lessen Research Methods (bv.\ vergelijkende studie of risico-analyse)? Zorg er dan ook voor dat we duidelijk de verschillende stappen terug vinden die we verwachten in dit soort onderzoek!
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{img/gantt-chart}
+    \caption{\label{fig:gantt}Gantt-diagram met de verschillende fasen en milestones van het onderzoek.}
+\end{figure*}
 
-Vermijd onderzoekstechnieken die geen objectieve, meetbare resultaten kunnen opleveren. Enquêtes, bijvoorbeeld, zijn voor een bachelorproef informatica meestal \textbf{niet geschikt}. De antwoorden zijn eerder meningen dan feiten en in de praktijk blijkt het ook bijzonder moeilijk om voldoende respondenten te vinden. Studenten die een enquête willen voeren, hebben meestal ook geen goede definitie van de populatie, waardoor ook niet kan aangetoond worden dat eventuele resultaten representatief zijn.
+\subsection{Literatuurstudie}
 
-Uit dit onderdeel moet duidelijk naar voor komen dat je bachelorproef ook technisch voldoen\-de diepgang zal bevatten. Het zou niet kloppen als een bachelorproef informatica ook door bv.\ een student marketing zou kunnen uitgevoerd worden.
+Het onderzoek start met een gerichte literatuurstudie die de basis vormt voor de ontwikkeling van de PoC, het opzetten van de experimenten en het verwerken van de resultaten. De literatuurstudie wordt doorheen het onderzoek iteratief aangevuld, zodat nieuwe inzichten onmiddellijk kunnen worden toegepast. De iteratieve eigenschap van dit onderzoek wordt weergegeven in Figuur \ref{fig:flow}.
 
-Je beschrijft ook al welke tools (hardware, software, diensten, \ldots) je denkt hiervoor te gebruiken of te ontwikkelen.
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{img/flowchart}
+    \caption{\label{fig:flow}Flowchart met de verschillende fasen van het onderzoek.}
+\end{figure*}
 
-Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
+\subsection{Bachelorproefvoorstel}
 
-%---------- Verwachte resultaten ----------------------------------------------
-\section{Verwacht resultaat, conclusie}%
-\label{sec:verwachte_resultaten}
+Parallel aan de literatuurstudie wordt het bachelorproefvoorstel opgesteld. Een eerste versie wordt ingediend voor feedback, waarna een tweede versie uitgewerkt wordt op basis van de aanbevelingen van de promotor. Het voorstel vormt het startpunt van het onderzoek.
 
-Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
+\subsection{Proof-of-Concept}
 
-Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
+Op basis van de literatuurstudie wordt een PoC ontwikkeld. Deze omvat de dataverwerkingspipeline voor het verwerken van artikelen, een classificatiemodel voor het detecteren van journalistieke bias en een browserextensie die de resultaten van het model visualiseert. De implementatie verloopt parallel aan de literatuurstudie, zodat nieuwe inzichten kunnen worden toegepast in de uitwerking van het ontwerp.
 
-Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
+\subsection{Experimenten}
+
+Wanneer de PoC voldoende stabiel is, kunnen experimenten worden opgezet. Deze omvatten functionele testen, prestatie testen en vergelijkingen met bestaande oplossingen. Alle experimenten worden uitgevoerd in een reproduceerbare, repliceerbare en herbruikbare omgeving.
+
+\subsection{Resultaten}
+
+De resultaten van de experimenten worden systematisch geanalyseerd en verwerkt. De analyses vormen de basis voor het beantwoorden van de onderzoeksvragen. Deze bevindingen worden samengevat in grafieken, tabellen en figuren, die in de bachelorproef worden opgenomen.
+
+\subsection{Bachelorproef}
+
+Gedurende het onderzoek wordt de bachelorproef systematisch aangevuld met nieuwe inzichten, resultaten en conclusies.
+
+\section{Verwachte resultaten}
+\label{sec:verwachte-resultaten}
+
+Het verwachte resultaat van dit onderzoek is een functionele Proof-of-Concept (PoC) browserextensie die automatisch artikelen van Het Laatste Nieuws kan analyseren en classificeren op basis van journalistieke bias. De belangrijkste componenten van de PoC zijn:
+
+\begin{itemize}
+    \item Een dataverwerkingspipeline die nieuwsartikelen automatisch kan extraheren uit webpagina's en deze op een consistente en stabiele manier kan preprocessen.
+    \item Een getraind classificatiemodel dat journalistieke bias in tekst kan detecteren met een hoge nauwkeurigheid, waarbij een minima\-le F1-score van 0,80 op een testset wordt verwacht.
+    \item Een gebruikersinterface die de classificatieresultaten op een duidelijke en interpreteerbare wijze visualiseert, zonder merkbare vertragingen bij het laden van nieuwsartikelen.
+\end{itemize}
+
+Het doel is dat de extensie betrouwbare resultaten oplevert, zodat gebruikers zich bewust kunnen worden van de mogelijke journalistieke vooringenomenheid in nieuwsartikelen en hun nieuws kritisch kunnen consumeren.
+
+\section{Conclusie}
+\label{sec:conclusie}
+
+Uit dit onderzoek zal blijken in welke mate een automatische biasdetectie-extensie realiseerbaar en bruikbaar is voor nieuwsartikelen van Het Laatste Nieuws. Het onderzoek zal inzicht geven in de effectiviteit van NLP-methoden voor het detecteren van journalistieke bias binnen één specifieke nieuwsbron.
+
+Afwijkingen tussen de verwachte en daadwerkelijke resultaten zullen belangrijke inzichten geven over de betrouwbaarheid van automatische biasdetectiesystemen. Daarnaast zal het onderzoek aantonen hoe een dergelijk systeem kan bijdragen aan kritisch mediagebruik.
 
