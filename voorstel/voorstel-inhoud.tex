@@ -5,11 +5,11 @@ Dit voorstel is gebaseerd op het onderzoeksvoorstel dat werd geschreven in het k
 \section{Inleiding}
 \label{sec:inleiding}
 
-In de hedendaagse wereld spelen mediabedrijven een cruciale rol in het bieden van informatie. Het is van groot belang dat deze informatie op een objectieve wijze gedeeld wordt, maar de realiteit blijkt niet aan onze verwachtingen te voldoen. Het onpartijdigheidsrapport van de Vlaamse Regulator voor de Media toont aan dat VTM Nieuws, onderdeel van DPG Media, in haar berichtgeving bepaalde politieke partijen meer spreektijd geeft dan andere \autocite{VanAelst2024}. Tegelijkertijd heeft Het Laatste Nieuws, ook onderdeel van DPG Media, volgens dagelijkse rapporten gepubliceerd door het \textcite{CIM2025} al jaren het grootste bereik onder de Vlaamse nieuwswebsites.
+In de hedendaagse wereld spelen mediabedrijven een cruciale rol in het bieden van informatie. Het is van groot belang dat deze informatie op een objectieve wijze wordt gedeeld, maar de realiteit blijkt niet aan onze verwachtingen te voldoen. Het onpartijdigheidsrapport van de Vlaamse Regulator voor de Media toont aan dat VTM Nieuws, onderdeel van DPG Media, in haar berichtgeving bepaalde politieke partijen meer spreektijd geeft dan andere \autocite{VanAelst2024}. Tegelijkertijd heeft Het Laatste Nieuws, ook onderdeel van DPG Media, volgens dagelijkse rapporten gepubliceerd door het \textcite{CIM2025} al jaren het grootste bereik onder de Vlaamse nieuwswebsites.
 
 Wanneer nieuws niet op neutrale wijze wordt weergegeven, kan dit bijdragen aan een afnemend vertrouwen in de traditionele media \autocite{Hanjia2024}. Bovendien wordt nieuws sneller aangenomen als waarheid wanneer dit hun persoonlijke overtuigingen bevestigt \autocite{Schwalbe2024}. Deze vaststellingen tonen aan dat er nood is aan onderzoek naar automatische detectiesystemen voor journalistieke bias.
 
-Dit onderzoek richt zich op het ontwikkelen van een browserextensie die geopende nieuwsartikelen op de website van Het Laatste Nieuws (HLN) automatisch analyseert en classificeert op basis van hun partijdigheid. Deze extensie is gericht op lezers van HLN die twijfelen aan de neutraliteit van de berichtgeving en die zich bewust willen worden van de mogelijke vooringenomenheid in hun dagelijkse nieuwsconsumptie.
+Dit onderzoek richt zich op het ontwikkelen van een browserextensie die nieuwsartikelen van Het Laatste Nieuws (HLN) automatisch analyseert en classificeert op basis van hun partijdigheid. Deze extensie is gericht op lezers van HLN die twijfelen aan de neutraliteit van de berichtgeving en die zich bewust willen worden van de mogelijke vooringenomenheid in hun dagelijkse nieuwsconsumptie.
 
 De centrale onderzoeksvraag luidt: Hoe kan een browserextensie ontwikkeld worden die artikelen van Het Laatste Nieuws automatisch classificeert op basis van hun partijdigheid, met minimale impact op de gebruikservaring? Om deze hoofdonderzoeksvraag te beantwoorden, zijn volgende deelvragen geformuleerd:
 
@@ -20,7 +20,11 @@ De centrale onderzoeksvraag luidt: Hoe kan een browserextensie ontwikkeld worden
     \item Op welke wijze kan de semantische betekenis van woorden behouden tijdens het classificeren?
 \end{itemize}
 
-Het doel van dit onderzoek is het ontwerpen van een Proof-of-Concept die automatische detectie en classificatie van partijdigheid in nieuwsartikelen realiseert en integreert in een gebruiksvriendelijke browserextensie. De betrouwbaarheid en gebruikservaring van deze Proof-of-Con\-cept zullen geëvalueerd worden aan de hand van testen.
+Het doel van dit onderzoek is het ontwerpen van een Proof-of-Concept (PoC) die automatische detectie en classificatie van journalistieke partijdigheid in nieuwsartikelen realiseert en implementeert in een gebruiksvriendelijke browserextensie.
+
+De Proof-of-Concept classificeert elk artikel als \textit{neutraal} of \textit{niet-neutraal}, gecombineerd met een \textit{confidence score} die de zekerheid van het classificatiemodel weergeeft. Indien een artikel als \textit{niet-neutraal} wordt geclassificeerd, worden zinnen aangeduid die volgens het classificatiemodel het meest hebben bijgedragen aan de classificatie.
+
+De prestaties van de PoC worden geëvalueerd aan de hand van standaard classificatiemetrics, namelijk precision, recall en F1-score, berekend op een testset. Daarnaast wordt een benchmark uitgevoerd waarbij de resultaten worden vergeleken met bestaande oplossingen voor mediabiasdetectie, zoals \textit{Ground News} en \textit{Media Bias}.
 
 \section{Literatuurstudie}
 \label{sec:literatuurstudie}
@@ -82,10 +86,22 @@ Een andere relevante techniek is het gebruik van \textit{Embeddings from Languag
 
 Er bestaan nog andere methoden om semantische betekenis van woorden te behouden, maar deze worden niet opgenomen in deze literatuurstudie.
 
+\subsection{Samenstellen van een dataset}
+
+Het is niet mogelijk om een grootschalige, gelabelde dataset van nieuwsartikelen van Het Laatste Nieuws te verkrijgen. Handmatige labeling van een dergelijke dataset is bovendien niet haalbaar, vanwege tijdsbeperkingen en de complexiteit en tijdsintensiviteit van het beoordelen van bias in nieuwsartikelen. Om deze beperking te omzeilen, wordt gekozen voor een trainingsstrategie waarbij het model wordt getraind op drie verschillende datasets, die elk een specifieke rol vervullen binnen het classificatieproces.
+
+\begin{enumerate}
+    \item \textit{Metadata-dataset}: Deze dataset bevat aanvullende informatie over nieuwsartikelen, zoals publiekelijk beschikbare gegevens over de auteur(s). Deze informatie wordt verzameld via webscraping van de HLN-website. De metadata kan worden gebruikt om patronen in partijdigheid over meerdere publicaties van een auteur te identificeren, die gebruikt worden als aanvullende context bij de biasclassificatie.
+    \item \textit{Sentence‑level dataset}: Op zinsniveau gelabelde datasets, zoals de \textit{FactNews}-dataset \autocite{Vargas2024}, voorgesteld in het onderzoek van \textcite{Vargas2023}, worden gebruikt om een model te trainen dat indicaties van bias binnen individuele zinnen kan detecteren. Deze datasets zijn oorspronkelijk in andere talen beschikbaar, waardoor ze vooraf worden vertaald naar het Nederlands. De datasets maken het mogelijk om zinnen die het sterkst bijdragen aan de uiteindelijke biasclassificatie van een artikel te identificeren.
+    \item \textit{Document‑level dataset}: Voor training op documentniveau wordt een fijnschalige gelabelde dataset van HLN-artikelen gebruikt, waarbij biaslabels worden afgeleid uit externe media bias checkers, zoals \textit{Media Bias} en \textit{Ground News}. Als alternatief kan gebruik worden gemaakt van bestaande document-level datasets, zoals de \textit{NewsMediaBias-Plus} dataset \autocite{Raza2024}, waarbij artikelen vooraf worden vertaald naar het Nederlands. Deze dataset wordt gebruikt voor de globale biasclassificatie van een nieuwsartikel.
+\end{enumerate}
+
+Het uiteindelijke model bestaat uit drie afzonderlijke pipelines die elk worden getraind op hun respectievelijke dataset. De outputs van de meta\-data- en sentence-level pipelines geven invloed tijdens de document-level pipeline. Door deze aanpak kan een model ontwikkeld worden zonder dat een grootschalige, handmatig gelabelde dataset van HLN-artikelen vereist is.
+
 \section{Methodologie}
 \label{sec:methodologie}
 
-Dit onderzoek volgt een Agile werkwijze waarbij literatuurstudie, ontwerp, evaluatie en rapportering elkaar afwisselen. De methodologie is gericht op het systematisch verzamelen van kennis, het ontwikkelen van een Proof-of-Concept (PoC), het uitvoeren van experimenten en het verwerken van de resultaten. De volledige tijdsplanning wordt weergegeven in Figuur \ref{fig:gantt}.
+Dit onderzoek volgt een Agile werkwijze waarbij literatuurstudie, ontwerp, evaluatie en rapportering elkaar afwisselen. De methodologie is gericht op het systematisch verzamelen van kennis, het ontwikkelen van een Proof-of-Concept, het uitvoeren van experimenten en het verwerken van de resultaten. De volledige tijdsplanning wordt weergegeven in Figuur \ref{fig:gantt}.
 
 \begin{figure*}
     \centering
@@ -113,7 +129,7 @@ Op basis van de literatuurstudie wordt een PoC ontwikkeld. Deze omvat de dataver
 
 \subsection{Experimenten}
 
-Wanneer de PoC voldoende stabiel is, kunnen experimenten worden opgezet. Deze omvatten functionele testen, prestatie testen en vergelijkingen met bestaande oplossingen. Alle experimenten worden uitgevoerd in een reproduceerbare, repliceerbare en herbruikbare omgeving.
+Wanneer de PoC voldoende stabiel is, kunnen experimenten worden opgezet. Deze omvatten functionele testen, prestatietesten en vergelijkingen met bestaande oplossingen. Alle experimenten worden uitgevoerd in een reproduceerbare, repliceerbare en herbruikbare omgeving.
 
 \subsection{Resultaten}
 
@@ -126,7 +142,7 @@ Gedurende het onderzoek wordt de bachelorproef systematisch aangevuld met nieuwe
 \section{Verwachte resultaten}
 \label{sec:verwachte-resultaten}
 
-Het verwachte resultaat van dit onderzoek is een functionele Proof-of-Concept (PoC) browserextensie die automatisch artikelen van Het Laatste Nieuws kan analyseren en classificeren op basis van journalistieke bias. De belangrijkste componenten van de PoC zijn:
+Het verwachte resultaat van dit onderzoek is een functionele Proof-of-Concept die nieuwsartikelen van Het Laatste Nieuws kan analyseren en classificeren op basis van journalistieke bias. De belangrijkste componenten van de PoC zijn:
 
 \begin{itemize}
     \item Een dataverwerkingspipeline die nieuwsartikelen automatisch kan extraheren uit webpagina's en deze op een consistente en stabiele manier kan preprocessen.
@@ -139,7 +155,6 @@ Het doel is dat de extensie betrouwbare resultaten oplevert, zodat gebruikers zi
 \section{Conclusie}
 \label{sec:conclusie}
 
-Uit dit onderzoek zal blijken in welke mate een automatische biasdetectie-extensie realiseerbaar en bruikbaar is voor nieuwsartikelen van Het Laatste Nieuws. Het onderzoek zal inzicht geven in de effectiviteit van NLP-methoden voor het detecteren van journalistieke bias binnen één specifieke nieuwsbron.
+Uit dit onderzoek zal blijken in welke mate een automatische biasdetectie-extensie realiseerbaar en bruikbaar is voor nieuwsartikelen van Het Laatste Nieuws. Het onderzoek biedt inzicht in de effectiviteit van NLP-methoden voor het detecteren van journalistieke bias binnen één specifieke nieuwsbron.
 
 Afwijkingen tussen de verwachte en daadwerkelijke resultaten zullen belangrijke inzichten geven over de betrouwbaarheid van automatische biasdetectiesystemen. Daarnaast zal het onderzoek aantonen hoe een dergelijk systeem kan bijdragen aan kritisch mediagebruik.
-
