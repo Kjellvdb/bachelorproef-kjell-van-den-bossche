@@ -92,8 +92,8 @@ Het is niet mogelijk om een grootschalige, gelabelde dataset van nieuwsartikelen
 
 \begin{enumerate}
     \item \textit{Metadata-dataset}: Deze dataset bevat aanvullende informatie over nieuwsartikelen, zoals publiekelijk beschikbare gegevens over de auteur(s). Deze informatie wordt verzameld via webscraping van de HLN-website. De metadata kan worden gebruikt om patronen in partijdigheid over meerdere publicaties van een auteur te identificeren, die gebruikt worden als aanvullende context bij de biasclassificatie.
-    \item \textit{Sentence‑level dataset}: Op zinsniveau gelabelde datasets, zoals de \textit{FactNews}-dataset \autocite{Vargas2024}, voorgesteld in het onderzoek van \textcite{Vargas2023}, worden gebruikt om een model te trainen dat indicaties van bias binnen individuele zinnen kan detecteren. Deze datasets zijn oorspronkelijk in andere talen beschikbaar, waardoor ze vooraf worden vertaald naar het Nederlands. De datasets maken het mogelijk om zinnen die het sterkst bijdragen aan de uiteindelijke biasclassificatie van een artikel te identificeren.
-    \item \textit{Document‑level dataset}: Voor training op documentniveau wordt een fijnschalige gelabelde dataset van HLN-artikelen gebruikt, waarbij biaslabels worden afgeleid uit externe media bias checkers, zoals \textit{Media Bias} en \textit{Ground News}. Als alternatief kan gebruik worden gemaakt van bestaande document-level datasets, zoals de \textit{NewsMediaBias-Plus} dataset \autocite{Raza2024}, waarbij artikelen vooraf worden vertaald naar het Nederlands. Deze dataset wordt gebruikt voor de globale biasclassificatie van een nieuwsartikel.
+    \item \textit{Sentence-level dataset}: Op zinsniveau gelabelde datasets, zoals de \textit{FactNews}-dataset \autocite{Vargas2024}, voorgesteld in het onderzoek van \textcite{Vargas2023}, worden gebruikt om een model te trainen dat indicaties van bias binnen individuele zinnen kan detecteren. Deze datasets zijn oorspronkelijk in andere talen beschikbaar, waardoor ze vooraf worden vertaald naar het Nederlands. De datasets maken het mogelijk om zinnen die het sterkst bijdragen aan de uiteindelijke biasclassificatie van een artikel te identificeren.
+    \item \textit{Document-level dataset}: Voor training op documentniveau wordt een fijnschalige gelabelde dataset van HLN-artikelen gebruikt, waarbij biaslabels worden afgeleid uit externe media bias checkers, zoals \textit{Media Bias} en \textit{Ground News}. Als alternatief kan gebruik worden gemaakt van bestaande document-level datasets, zoals de \textit{NewsMediaBias-Plus} dataset \autocite{Raza2024}, waarbij artikelen vooraf worden vertaald naar het Nederlands. Deze dataset wordt gebruikt voor de globale biasclassificatie van een nieuwsartikel.
 \end{enumerate}
 
 Het uiteindelijke model bestaat uit drie afzonderlijke pipelines die elk worden getraind op hun respectievelijke dataset. De outputs van de meta\-data- en sentence-level pipelines geven invloed tijdens de document-level pipeline. Door deze aanpak kan een model ontwikkeld worden zonder dat een grootschalige, handmatig gelabelde dataset van HLN-artikelen vereist is.
@@ -105,7 +105,7 @@ Dit onderzoek volgt een Agile werkwijze waarbij literatuurstudie, ontwerp, evalu
 
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{img/gantt-chart}
+    \includegraphics[width=\textwidth]{gantt-chart.png}
     \caption{\label{fig:gantt}Gantt-diagram met de verschillende fasen en milestones van het onderzoek.}
 \end{figure*}
 
@@ -115,7 +115,7 @@ Het onderzoek start met een gerichte literatuurstudie die de basis vormt voor de
 
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{img/flowchart}
+    \includegraphics[width=\textwidth]{flowchart.png}
     \caption{\label{fig:flow}Flowchart met de verschillende fasen van het onderzoek.}
 \end{figure*}
 
