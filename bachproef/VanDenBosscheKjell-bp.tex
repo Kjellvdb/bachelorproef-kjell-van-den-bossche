@@ -1,0 +1,129 @@
+\documentclass[dutch,dit,thesis]{hogentreport}
+
+\graphicspath{{../graphics/}}
+
+\usepackage[chapter,shellescape,cachedir=../output/_minted-cache,outputdir=../output]{minted}
+\usemintedstyle{solarized-light}
+\setminted{
+    autogobble,
+    frame=lines,
+    breaklines,
+    linenos,
+    tabsize=4
+}
+
+\makeatletter
+\ifcsname if@minted@isoutputdir\endcsname
+  \setminted{outputdir=../output}
+\fi
+\makeatother
+
+\renewcommand\listoflistingscaption{
+    \IfLanguageName{dutch}{Lijst van codefragmenten}{List of listings}
+}
+\renewcommand\listingscaption{
+    \IfLanguageName{dutch}{Codefragment}{Listing}
+}
+\renewcommand*\listoflistings{
+    \cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\listoflistingscaption}
+    \listof{listing}{\listoflistingscaption}
+}
+
+% Other packages not already included can be imported here
+\usepackage{lipsum} % For dummy text, can be removed
+\usepackage[acronym]{glossaries}
+\makeglossaries
+
+\author{Kjell Van Den Bossche}
+\supervisor{Dhr. S. Lippens (HoGent, \href{mailto:simon.lippens@hogent.be}{simon.lippens@hogent.be})}
+\cosupervisor{Prof. dr. K. Lamot (UGent, \href{mailto:Kenza.Lamot@UGent.be}{Kenza.Lamot@UGent.be})}
+\title{Automatische detectie en classificatie van partijdig-heid in artikelen van Het Laatste Nieuws}
+\academicyear{\advance\year by -1 \the\year--\advance\year by 1 \the\year}
+\examperiod{2}
+\degreesought{\IfLanguageName{dutch}{Professionele bachelor in de toegepaste informatica}{Bachelor of applied computer science}}
+\partialthesis{false}
+
+\hyphenation{back-slash}
+
+\usepackage{biblatex}
+\addbibresource{bachproef.bib}
+\addbibresource{../voorstel/voorstel.bib}
+\defbibheading{bibempty}{}
+
+\renewcommand{\cleardoublepage}{\clearpage}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{document}
+
+\frontmatter
+
+\hypersetup{pageanchor=false}
+\IfLanguageName{english}{
+    \degreesought{Professionele Bachelor toegepaste informatica}
+    \begin{otherlanguage}{dutch}
+       \maketitle
+    \end{otherlanguage}
+}{}
+
+\maketitle
+\hypersetup{pageanchor=true}
+
+\newacronym{vrm}{VRM}{Vlaamse Regulator voor de Media}
+\newacronym{hln}{HLN}{Het Laatste Nieuws}
+\newacronym{poc}{PoC}{Proof-of-Concept}
+\newacronym{nlp}{NLP}{Natural Language Processing}
+\newacronym{bert}{BERT}{Bidirectional Encoder Representations from Transformers}
+\newacronym{dom}{DOM}{Document Object Model}
+\newacronym{glove}{GloVe}{Global Vectors}
+\newacronym{elmo}{ELMo}{Embeddings from Language Models}
+\newacronym{lstm}{LSTM}{Long Short-Term Memory}
+
+\input{voorwoord}
+
+\input{samenvatting}
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\listoflistings
+
+\printglossary[type=\acronymtype,title={Lijst van afkortingen}]
+\addcontentsline{toc}{chapter}{Lijst van afkortingen}
+
+\mainmatter{}
+
+\input{inleiding}
+
+\input{standvanzaken}
+
+\input{methodologie}
+
+\input{conclusie}
+
+\appendix
+
+\chapter{Onderzoeksvoorstel}
+
+Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat vooraf werd beoordeeld door de promotor. Dat voorstel is opgenomen in deze bijlage.
+
+\section*{Samenvatting}
+
+Dit onderzoek richt zich op de automatische detectie en classificatie van journalistieke partijdigheid in nieuwsartikelen van Het Laatste Nieuws (HLN), met als doel lezers bewust te maken van mogelijke vooringenomenheid in hun dagelijkse nieuwsconsumptie. In de afgelopen jaren is het aantal bevooroordeelde nieuwsberichtgevingen bij DPG Media (moederbedrijf van VTM en HLN) toegenomen. Volgens het onpartijdigheidsrapport van de Vlaamse Regulator voor de Media blijkt dat VTM Nieuws in haar berichtgeving bepaalde politieke partijen bevoordeelt, wat op lange termijn kan leiden tot afnemend vertrouwen in de media. Om meer transparantie te bieden over de mogelijke vooringenomenheid in nieuwsartikelen van Het Laatste Nieuws, wordt een browserextensie ontwikkeld die de partijdigheid van een nieuwsartikel automatisch analyseert zonder de gebruikservaring te verstoren. Het onderzoek bestaat uit een literatuurstudie naar de verschillende vormen en indicatoren van journalistieke vooringenomenheid, gevolgd door het samenstellen van een dataset van nieuwsartikelen en het trainen van een classificatiemodel. De verwachte meerwaarde van dit onderzoek is een gebruiksvriendelijk hulpmiddel dat lezers ondersteunt bij het kritisch consumeren van het nieuws.
+
+\input{../voorstel/voorstel-inhoud}
+
+% TODO: Voeg hier eventuele andere bijlagen toe.
+%\input{...}
+
+\backmatter{}
+
+\setlength\bibitemsep{2pt}
+\begin{sloppy}
+    \sloppy
+    \printbibliography[heading=bibintoc]
+\end{sloppy}
+
+\end{document}

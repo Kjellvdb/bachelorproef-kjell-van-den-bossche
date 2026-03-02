@@ -1,30 +1,96 @@
-%%=============================================================================
-%% Methodologie
-%%=============================================================================
-
-\chapter{\IfLanguageName{dutch}{Methodologie}{Methodology}}%
+\chapter{\IfLanguageName{dutch}{Methodologie}{Methodology}}
 \label{ch:methodologie}
 
-%% TODO: In dit hoofstuk geef je een korte toelichting over hoe je te werk bent
-%% gegaan. Verdeel je onderzoek in grote fasen, en licht in elke fase toe wat
-%% de doelstelling was, welke deliverables daar uit gekomen zijn, en welke
-%% onderzoeksmethoden je daarbij toegepast hebt. Verantwoord waarom je
-%% op deze manier te werk gegaan bent.
-%% 
-%% Voorbeelden van zulke fasen zijn: literatuurstudie, opstellen van een
-%% requirements-analyse, opstellen long-list (bij vergelijkende studie),
-%% selectie van geschikte tools (bij vergelijkende studie, "short-list"),
-%% opzetten testopstelling/PoC, uitvoeren testen en verzamelen
-%% van resultaten, analyse van resultaten, ...
-%%
-%% !!!!! LET OP !!!!!
-%%
-%% Het is uitdrukkelijk NIET de bedoeling dat je het grootste deel van de corpus
-%% van je bachelorproef in dit hoofstuk verwerkt! Dit hoofdstuk is eerder een
-%% kort overzicht van je plan van aanpak.
-%%
-%% Maak voor elke fase (behalve het literatuuronderzoek) een NIEUW HOOFDSTUK aan
-%% en geef het een gepaste titel.
+Dit hoofdstuk geeft een overzicht van het plan van aanpak voor de uitvoering van het onderzoek. Het bouwt voort op de inzichten uit Hoofdstuk \ref{ch:stand-van-zaken} en dient als basis voor de uitvoering van de verschillende onderzoekstaken.
 
-\lipsum[21-25]
+\section{Opstellen van een dataset}
+\label{sec:opstellen-van-een-dataset}
 
+Het opstellen van een dataset is essentieel voor het trainen en evalueren van het model voor het detecteren van journalistieke partijdigheid. In dit onderzoek worden drie verschillende datasets gecombineerd om zowel metadata, zinsniveau- als documentniveau-informatie te bevatten.
+
+\subsection{Metadata-dataset}
+
+De metadata-dataset wordt verkregen door het scrapen van nieuwsartikelen van de \gls{hln}-website. Voor elk artikel worden relevante metadata verzameld, zoals:
+
+\begin{itemize}
+    \item Auteur
+    \item Publicatiedatum
+    \item Nieuwssectie
+\end{itemize}
+
+De scraping wordt uitgevoerd met Python en de \textit{BeautifulSoup}-bibliotheek, waarbij de \gls{dom}-structuur van de webpagina wordt geanalyseerd om de benodigde informatie te extraheren.
+
+\subsection{Sentence-level dataset}
+
+Voor training op zinsniveau wordt gebruikgemaakt van de \textit{FactNews}-dataset \autocite{Vargas2024}. Deze dataset wordt vertaald naar het Nederlands en bevat zinnen die gelabeld zijn op basis van partijdigheid. Hierdoor kan het model signalen van bias binnen afzonderlijke zinnen leren herkennen.
+
+\subsection{Document-level dataset}
+
+Voor het trainen op documentniveau wordt de \textit{NewsMediaBias-Plus}-dataset van \textcite{Raza2024} gebruikt. Ook deze dataset wordt vertaald naar het Nederlands en bevat labels op het niveau van volledige artikelen. Training op documentniveau helpt het model om bredere patronen van partijdigheid te herkennen die niet zichtbaar zijn op zinsniveau.
+
+\subsection{Testset}
+
+De testset bestaat uit artikelen van \gls{hln}, die gescraped worden met dezelfde aanpak als voor de metadata-dataset. Voor elk artikel worden de volgende elementen verzameld:
+
+\begin{itemize}
+    \item Titel van het artikel
+    \item Volledige inhoud van het artikel
+    \item Metadata (auteur, publicatiedatum, nieuwssectie)
+\end{itemize}
+
+De testset wordt gebruikt om de prestaties van het getrainde model te evalueren op echte \gls{hln}-artikelen, waarbij de voorspellingen van het model worden vergeleken met de labels van externe mediabias-tools.
+
+\section{Opstellen van een pipeline}
+\label{sec:opstellen-van-een-pipeline}
+
+Voor de verwerking van de drie datasets wordt een pipeline ontwikkeld in Python. De pipeline bestaat uit drie componenten die elk afzonderlijk worden getraind op hun respectievelijke dataset. De outputs van de metadata- en sentence-level componenten worden geïntegreerd als aanvullende features binnen het document-level component, dat een eindvoorspelling genereert over de partijdigheid van het volledige artikel.
+
+De pipeline bestaat uit de volgende fasen:
+
+\begin{enumerate}
+    \item Data-inname
+    \item Preprocessing (tokenisatie, normalisatie en vertaling indien nodig)
+    \item Feature-engineering
+    \item Modeltraining en validatie
+\end{enumerate}
+
+\section{Trainen en evalueren}
+\label{sec:trainen-en-evalueren}
+
+De componenten worden afzonderlijk getraind op hun respectieve datasets. Een train-validatie-testverdeling wordt gehanteerd om overfitting te voorkomen. Tijdens het trainingsproces worden hyperparameters geoptimaliseerd om de prestaties van elk component te maximaliseren.
+
+Voor evaluatie worden standaard classificatiemetrieken toegepast:
+
+\begin{itemize}
+    \item Accuracy
+    \item Precision
+    \item Recall
+    \item F1-score
+\end{itemize}
+
+Naast de afzonderlijke training en evaluatie van de componenten wordt ook de volledige pipeline geëvalueerd op de testset van \gls{hln}-artikelen.
+
+\section{Vergelijkende evaluatie met bestaande tools}
+\label{sec:vergelijkende-evaluatie-met-bestaande-tools}
+
+De prestaties van het ontwikkelde model worden vergeleken met bestaande mediabias-tools, waaronder \textit{Media Bias} en \textit{Ground News}. Deze tools worden gebruikt als benchmark om de effectiviteit van het model te beoordelen. De vergelijking wordt uitgevoerd op dezelfde testset van \gls{hln}-artikelen, waarna de resultaten van het model worden vergeleken met de classificaties van de externe tools.
+
+\section{Implementatie van een browserextensie}
+\label{sec:implementatie-van-een-browserextensie}
+
+Een browserextensie wordt ontwikkeld in JavaScript om de partijdigheid van nieuwsartikelen automatisch te analyseren. De extensie verwerkt de DOM-structuur van een webpagina, extraheert de inhoud van het artikel en stuurt deze door naar het getrainde model.
+
+De output van het model wordt visueel weergegeven binnen de webpagina. Daarnaast worden de zinnen die het meest bijdragen aan de voorspelling gemarkeerd in de tekst, zodat de gebruiker inzicht krijgt in de motivatie van de classificatie.
+
+\section{Resultatenanalyse}
+\label{sec:resultatenanalyse}
+
+De resultaten van de evaluatiefase en benchmarktesten worden geanalyseerd, waarbij gekeken wordt naar:
+
+\begin{itemize}
+    \item De prestaties van de individuele componenten.
+    \item De prestaties van de volledige pipeline op de testset van \gls{hln}-artikelen.
+    \item Een vergelijking van de voorspellingen van het model met die van bestaande mediabias-tools.
+\end{itemize}
+
+Op basis van deze analyse worden conclusies getrokken over de effectiviteit van het model en worden mogelijke verbeterpunten voor toekomstige onderzoeken geïdentificeerd.

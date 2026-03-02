@@ -1,50 +1,44 @@
-%%=============================================================================
-%% Inleiding
-%%=============================================================================
-
-\chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
+\chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
+In de hedendaagse samenleving spelen mediabedrijven een cruciale rol in het bieden van informatie. Het is essentieel dat deze informatie op een objectieve wijze wordt gedeeld, maar de realiteit blijkt niet altijd aan onze verwachtingen te voldoen. Het onpartijdigheidsrapport van de \gls{vrm} toont aan dat VTM Nieuws, onderdeel van DPG Media, bepaalde politieke partijen meer spreektijd geeft dan andere \autocite{VanAelst2024}. Tegelijkertijd heeft \gls{hln}, ook onderdeel van DPG Media, volgens dagelijkse rapporten gepubliceerd door het \textcite{CIM2025} al jaren het grootste bereik onder de Vlaamse nieuwswebsites.
 
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
+Dit onderzoek richt zich op het ontwikkelen van een browserextensie die nieuwsartikelen van \gls{hln} automatisch analyseert en classificeert op basis van journalistieke partijdigheid. De extensie is specifiek gericht op lezers van \gls{hln} die twijfelen aan de neutraliteit van de berichtgeving en die zich bewust willen worden van de mogelijke vooringenomenheid in hun dagelijkse nieuwsconsumptie.Het vergroten van transparantie over mogelijke bias kan bijdragen aan kritisch mediagebruik en het versterken van het vertrouwen in nieuwsmedia.
 
-\section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
+\section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}
 \label{sec:probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+Nieuws dat niet op neutrale wijze wordt weergegeven, kan bijdragen aan een afnemend vertrouwen in de traditionele media \autocite{Hanjia2024}. Daarnaast wordt informatie sneller aangenomen als waarheid wanneer dit overeenkomt met persoonlijke overtuigingen \autocite{Schwalbe2024}. Deze vaststellingen benadrukken de nood aan onderzoek naar automatische detectiesystemen die journalistieke bias kunnen identificeren.
 
-\section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
+Dit systeem wordt ontwikkeld voor lezers van \gls{hln} die twijfelen aan de neutraliteit van de berichtgeving en die zich bewust willen worden van de mogelijke vooringenomenheid in hun dagelijkse nieuwsconsumptie. Het vergroten van transparantie over mogelijke bias kan bijdragen aan kritisch mediagebruik en het versterken van het vertrouwen in nieuwsmedia.
+
+\section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}
 \label{sec:onderzoeksvraag}
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+De centrale onderzoeksvraag luidt: Hoe kan een browserextensie ontwikkeld worden die artikelen van \gls{hln} automatisch classificeert op basis van hun partijdigheid, met minimale impact op de gebruikservaring?
 
-\section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
+Om deze vraag te beantwoorden, richt het onderzoek zich op de deelvragen:
+\begin{itemize}
+  \item Welke vormen van journalistieke bias komen voor in nieuwsartikelen?
+  \item Welke linguïstische kenmerken duiden op partijdigheid?
+  \item Welke bestaande methoden kunnen worden toegepast voor biasdetectie in teksten?
+  \item Hoe kan de semantische betekenis van woorden behouden blijven tijdens het classificatieproces?
+\end{itemize}
+
+\section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}
 \label{sec:onderzoeksdoelstelling}
 
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
+Het doel van dit onderzoek is het ontwerpen van een \gls{poc} die automatisch journalistieke partijdigheid in nieuwsartikelen van \gls{hln} detecteert en classificeert, geïmplementeerd in een gebruiksvriendelijke browserextensie. De \gls{poc} classificeert elk artikel als \textit{neutraal} of \textit{niet-neutraal} en geeft een \textit{confidence score} weer die de zekerheid van het classificatiemodel aangeeft. Indien een artikel als \textit{niet-neutraal} wordt geclassificeerd, worden de zinnen gemarkeerd die volgens het model het meest hebben bijgedragen aan deze classificatie.
 
-\section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
+De prestaties van de \gls{poc} worden geëvalueerd aan de hand van standaard classificatiemetrics, zoals precision, recall en F1-score, berekend op een testset. Daarnaast wordt een benchmark uitgevoerd waarbij de resultaten vergeleken worden met bestaande mediabiasdetectiesystemen, zoals \textit{Ground News} en \textit{Media Bias}.
+
+\section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}
 \label{sec:opzet-bachelorproef}
-
-% Het is gebruikelijk aan het einde van de inleiding een overzicht te
-% geven van de opbouw van de rest van de tekst. Deze sectie bevat al een aanzet
-% die je kan aanvullen/aanpassen in functie van je eigen tekst.
 
 De rest van deze bachelorproef is als volgt opgebouwd:
 
-In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
+In Hoofdstuk \ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, gebaseerd op een literatuurstudie.
 
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
+In Hoofdstuk \ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om de onderzoeksvragen te beantwoorden.
 
-% TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
-
-In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
+In Hoofdstuk \ref{ch:conclusie} wordt de conclusie gepresenteerd en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
