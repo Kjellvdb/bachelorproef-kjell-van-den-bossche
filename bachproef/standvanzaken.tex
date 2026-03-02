@@ -1,51 +1,150 @@
-\chapter{\IfLanguageName{dutch}{Stand van zaken}{State of the art}}%
+\chapter{\IfLanguageName{dutch}{Stand van zaken}{State of the art}}
 \label{ch:stand-van-zaken}
 
-% Tip: Begin elk hoofdstuk met een paragraaf inleiding die beschrijft hoe
-% dit hoofdstuk past binnen het geheel van de bachelorproef. Geef in het
-% bijzonder aan wat de link is met het vorige en volgende hoofdstuk.
+In dit hoofdstuk wordt een overzicht gegeven van de huidige stand van zaken binnen het domein van journalistieke partijdigheid en automatische detectie van bias. De literatuurstudie bouwt voort op de probleemstelling en onderzoeksvragen beschreven in Hoofdstuk \ref{ch:inleiding} en dient als basis voor de keuzes die in Hoofdstuk \ref{ch:methodologie} worden besproken.
 
-% Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
+\section{Vormen van journalistieke vooringenomenheid}
+\label{sec:vormen-van-journalistieke-vooringenomenheid}
 
-Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
+Partijdigheid komt voor in verschillende vormen, elk met specifieke kenmerken en effecten op de inhoud van nieuwsartikelen. Deze vormen van partijdigheid kunnen zichtbaar worden in woordkeuze, selectie van bronnen, nadruk op bepaalde standpunten of het weglaten van relevante informatie. Inzicht in de verschillende vormen is essentieel voor de ontwikkeling van automatische detectiesystemen.
 
-Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz.\ naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\LaTeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin (narratieve referentie), gebruik je \texttt{$\backslash${}textcite\{\}}. Soms is de auteursnaam niet expliciet een onderdeel van de zin, dan gebruik je \texttt{$\backslash${}autocite\{\}} (referentie tussen haakjes). Dit gebruik je bv.~bij een citaat, of om in het bijschrift van een overgenomen afbeelding, broncode, tabel, enz. te verwijzen naar de bron. In de volgende paragraaf een voorbeeld van elk.
+In de literatuur wordt journalistieke bias in verschillende vormen geclassificeerd. \textcite{Mullainathan2002} onderscheiden twee categorieën: \textit{ideology bias} en \textit{spin bias}, terwijl \textcite{SaezTrumper2013} drie andere categorieën onderscheiden: \textit{gatekeeping}, \textit{coverage bias} en \textit{statement bias}.
 
-\textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
+\subsection{Ideology bias}
 
-Let er ook op: het \texttt{cite}-commando voor de punt, dus binnen de zin. Je verwijst meteen naar een bron in de eerste zin die erop gebaseerd is, dus niet pas op het einde van een paragraaf.
+Bij \textit{ideology bias} wordt de inhoud van een artikel gestuurd in een bepaalde ideologische richting. Vaak reflecteren deze ideologische richtingen de voorkeuren van het mediabedrijf en haar doelgroep \autocite{Mullainathan2002}. Het sturen van informatie in bepaalde politieke richtingen is ook waargenomen bij VTM Nieuws, zoals gerapporteerd in het onpartijdigheidsrapport van de \gls{vrm} \autocite{VanAelst2024}.
+
+\subsection{Spin bias}
+
+In het geval van \textit{spin bias} wordt informatie gemanipuleerd met als doel het artikel opvallender of sensationeler te maken. Door de concurrentie tussen nieuwsorganisaties worden journalisten aangemoedigd om opvallende artikelen te schrijven, wat in sommige gevallen kan leiden tot het verdraaien of overdrijven van feiten \autocite{Alsem2008}. Er is nog geen onderzoek uitgevoerd naar het aandeel van \textit{spin bias} in artikelen gepubliceerd door \gls{hln}.
+
+\subsection{Gatekeeping}
+
+\textit{Gatekeeping}, ook wel \textit{selection bias} genoemd, wordt gedefinieerd als het bepalen van wie bepaalde informatie, macht of kansen krijgt \autocite{CALD2025}. De auteur maakt een specifieke selectie van informatie voor het artikel en laat andere informatie achterwege. Voor nieuwsartikelen worden auteurs vaak gedwongen om een selectie van informatie te maken vanwege de beperkte ruimte \autocite{SaezTrumper2013}.
+
+\subsection{Coverage bias}
+
+Bij \textit{coverage bias} wordt meer aandacht toegekend aan bepaalde onderdelen of personen in het artikel, en worden andere onderdelen of personen onderdrukt \autocite{DAlessio2006}. Deze extra aandacht kan zich op verschillende manieren uiten, zoals meer zendtijd op televisie, meer spreektijd op de radio of meer tekst in artikelen. Meer spreektijd geven aan bepaalde politieke personen is ook waargenomen bij VTM Nieuws \autocite{VanAelst2024}.
+
+\subsection{Statement bias}
+
+\textit{Statement bias}, ook wel \textit{presentation bias} genoemd, verwijst naar het voordeliger omschrijven van bepaalde onderdelen of personen, ten koste van andere \autocite{SaezTrumper2013}. Volgens \textcite{DAlessio2006} kan een mediabericht pas beschouwd worden als neutraal wanneer het evenveel uitspraken bevat die in de ene richting voordelig zijn als uitspraken die in de tegenovergestelde richting voordelig zijn.
+
+\section{Methoden om bias te detecteren}
+\label{sec:methoden-om-bias-te-detecteren}
+
+Het identificeren van journalistieke bias in nieuwsartikelen vereist methoden die zowel tekstuele als semantische kenmerken kunnen detecteren. Het analyseren van deze kenmerken vormt de basis voor de uiteindelijke classificatie van artikelen, waarbij technieken uit het domein van \gls{nlp} kunnen worden toegepast.
+
+\subsection{Supervised learning}
+
+Een van de methoden om artikelen te classificeren op basis van partijdigheid is \textit{supervised learning}, waarbij modellen getraind worden op gelabelde data. Vaak worden neurale tekstclassificatoren zoals \gls{bert} hierbij gebruikt.
+
+\gls{bert} is een complexe architectuur die contextuele representaties van teksten kan genereren en heeft zich al bewezen als een succesvolle methode voor \gls{nlp}-taken \autocite{Baly2020}. \gls{bert} is gebaseerd op het encoder-gedeelte van de transformer-architectuur \autocite{Devlin2018}, zoals weergegeven in figuur \ref{fig:bert-architectuur} \autocite{Vaswani2017}.
+
+In het onderzoek van \textcite{Baly2020} werd een biasclassificatiemodel op basis van \gls{bert} ontwikkeld. Het model werd getest op artikelen uit kranten die niet in de trainingsset waren opgenomen, om te voorkomen dat de nieuwsbron herkend zou worden en de classificatie zou beïnvloeden. In dit onderzoek zal hier geen rekening mee gehouden worden, aangezien het beperkt is tot één enkele nieuwsbron.
+
+Er bestaan verschillende voorgetrainde \gls{bert}-modellen, beschikbaar via \textit{Hugging Face} \autocite{Valurank2022}. \gls{bert} kan eenvoudig worden aangeroepen als een black-box model, waarbij de invoer een tekst is en de uitvoer een classificatie van de partijdigheid van die tekst. Een voorbeeld van een minimale implementatie van \gls{bert} voor tekstclassificatie in Python is te zien in codefragment \ref{code:bert-python-voorbeeld}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{grail.jpg}
-  \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
+  \includegraphics[width=0.2\textwidth]{bert-architectuur.png}
+  \caption[\gls{bert}-archi\-tectuur]{\label{fig:bert-architectuur}Schematische weergave van het encoder-gedeelte van de transformer-architectuur, waarop \gls{bert} is gebaseerd. Bron: \textcite{Vaswani2017}}
 \end{figure}
 
 \begin{listing}
   \begin{minted}{python}
-    import pandas as pd
-    import seaborn as sns
+    from transformers import pipeline
 
-    penguins = sns.load_dataset('penguins')
-    sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
+    classifier = pipeline("text-classification", model="valurank/finetuned-distilbert-news-article-categorization")
+
+    text = "The irony, of course, is that the exhibit that invites people to throw trash at vacuuming Ivanka Trump lookalike reflects every stereotype feminists claim to stand against, oversexualizing Ivanka's body and ignoring her hard work."
+
+    prediction = classifier(text)
   \end{minted}
-  \caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
+  \caption[Voorbeeld \gls{bert}-inference]{Voorbeeld van het aanroepen van een voorgetraind \gls{bert}-model voor tekstclassificatie. Het model voorspelt de partijdigheid van een korte Engelse tekst. Bron: \textcite{Valurank2022}.}
+  \label{code:bert-python-voorbeeld}
 \end{listing}
 
-\lipsum[7-20]
+\subsection{Unsupervised learning}
 
-\begin{table}
+Een andere methode die gebruikt kan worden is \textit{unsupervised learning}, waarbij de dataset niet gelabeld is. Hierbij wordt vaak gebruik gemaakt van vectorisatiemethoden in combinatie met clusteringalgoritmen \autocite{UmarNadeem2022}. Uit een onderzoek van \textcite{UmarNadeem2022} werd geconcludeerd dat deze methode niet effectief is voor het vinden van tekstpatronen die essentieel zijn voor het detecteren van bias. Figuur \ref{fig:unsupervised-learning-scheme} illustreert het verschil tussen supervised en unsupervised learning.
+
+\begin{figure}
+  \centering %-------------------------------
+  \includegraphics[width=0.6\textwidth]{unsupervised_vs_supervised.png}
+  \caption[Supervised vs Unsupervised learning]{Schematische weergave van het verschil in werking tussen supervised en unsupervised learning. Bron: \textcite{Morimoto2021}.}
+  \label{fig:unsupervised-learning-scheme}
+\end{figure}
+
+\subsection{Sentiment analysis}
+
+Een derde methode die relevant zou kunnen zijn binnen ons onderzoek is \textit{sentimentanalyse}. Deze techniek richt zich op het identificeren van toon in teksten en kan beoordelen of deze positief, negatief of neutraal is \autocite{Cui2025}. Hoewel deze methode mogelijk niet voldoende is om alle vormen van bias te detecteren, kan het wel in combinatie met een \textit{supervised learning} techniek zoals \gls{bert} gebruikt worden om betere resultaten te bereiken. Een voorbeeld van een eenvoudige implementatie van sentimentanalyse in Python is te zien in codefragment \ref{code:sentimentanalyse-voorbeeld}.
+
+\begin{listing}
+  \begin{minted}{python}
+    from transformers import pipeline
+
+    classifier = pipeline("sentiment-analysis")
+
+    text = "The irony, of course, is that the exhibit that invites people to throw trash at vacuuming Ivanka Trump lookalike reflects every stereotype feminists claim to stand against, oversexualizing Ivanka's body and ignoring her hard work."
+
+    prediction = classifier(text)
+  \end{minted}
+  \caption[Voorbeeld sentimentanalyse]{Voorbeeld van het uitvoeren van sentimentanalyse op een korte Engelse tekst. Het model classificeert de toon van de tekst als positief of negatief.}
+  \label{code:sentimentanalyse-voorbeeld}
+\end{listing}
+
+\subsection{Rule-based approach}
+
+\textit{Rule-based benaderingen} maken gebruik van vooraf gedefinieerde regels om bias-gerelateerde kenmerken in teksten te identificeren. In een recente studie van \textcite{Martinez2024} werd een rule-based model vergeleken met een deep learning model voor politieke biasclassificatie. Hieruit bleek dat het rule-based model consistent presteert en een hogere transparantie biedt. Deze studie toont aan dat rule-based benaderingen waardevol kunnen blijven naast complexe neurale modellen.
+
+\section{Methodes om tekst te extraheren uit een webpagina}
+\label{sec:methodes-om-tekst-te-extraheren-uit-een-webpagina}
+
+Voor de ontwikkeling van de browserextensie is het noodzakelijk om de tekst van geopende nieuwsartikelen op de \gls{hln}-website te kunnen extraheren. Een veelgebruikte methode hiervoor is het doorlopen van de \gls{dom}-structuur van de webpagina \autocite{GCD2012}. Het \gls{dom} vormt een hiërarchische representatie van alle elementen op een webpagina, zie figuur \ref{fig:dom-structuur}, en maakt het mogelijk om deze elementen dynamisch te lezen en te wijzigen. Moderne websites gedragen zich doorgaans consistent binnen verschillende browsers, waardoor het element dat de hoofdinhoud bevat meestal kan worden geïdentificeerd als het element met het grootste tekstvolume op een vergelijkbare diepte in de \gls{dom}-structuur \autocite{Aleksandersen2018}.
+
+Hoewel er alternatieve methodes bestaan om tekstextractie te bereiken, wordt dit onderzoek beperkt tot het gebruik van het \gls{dom}. De keuze wordt gemotiveerd door het feit dat dit een goed ondersteunde methode is binnen de meest gebruikte browsers.
+
+\begin{figure}
   \centering
-  \begin{tabular}{lcr}
-    \toprule
-    \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
-    $\alpha$         & $\beta$          & $\gamma$         \\
-    \midrule
-    A                & 10.230           & a                \\
-    B                & 45.678           & b                \\
-    C                & 99.987           & c                \\
-    \bottomrule
-  \end{tabular}
-  \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
-\end{table}
+  \includegraphics[width=0.8\textwidth]{dom-tree.png}
+  \caption[Schematische \gls{dom}-structuur]{Schematische voorstelling van een vereenvoudigde \gls{dom}-structuur. Bron: \textcite{W3Schools2024}.}
+  \label{fig:dom-structuur}
+\end{figure}
 
+\section{Methodes om semantische betekenis te behouden}
+\label{sec:methodes-om-semantische-betekenis-te-behouden}
+
+Het behoud van semantische betekenis van woorden is cruciaal binnen dit onderzoek. Een veelgebruikte methode hiervoor is het gebruik van woordembeddings, waarbij woorden worden omgezet in vectorrepresentaties. Volgens \textcite{Akbik2018} kan binnen deze benadering onderscheid worden gemaakt tussen klassieke en contextuele woordembeddings.
+
+\subsection{Global Vector Representations}
+
+Klassieke woordembeddings koppelen ieder woord aan één vaste vector, onafhankelijk van de context waarin het voorkomt. Een bekende techniek binnen deze categorie is \gls{glove}, dat globale corpusstatistieken gebruikt in combinatie met \textit{unsupervised learning} om woorden in een vectorruimte te representeren \autocite{Pennington2014}. Deze modellen kunnen semantische relaties vastleggen, maar houden geen rekening met contextuele betekenissen van individuele woorden.
+
+\subsection{Contextualized Word Representations}
+
+Om ook contextuele informatie te behouden binnen een vectorrepresentatie, kunnen contextuele woordembeddings worden gebruikt. Deze embeddings genereren representaties die afhankelijk zijn van de context waarin een woord voorkomt binnen een zin \autocite{Akbik2018}. Een belangrijke techniek binnen deze categorie is het gebruik van transformer-gebaseerde representaties zoals \gls{bert} \autocite{Khodake2020}, die contextuele informatie kunnen vasthouden in een vectorrepresentatie.
+
+\subsection{Embeddings from Language Models}
+
+Een andere relevante techniek is het gebruik van \gls{elmo}, waarbij vectorrepresentaties van woorden worden afgeleid uit een bidirectioneel \gls{lstm}-taalmodel \autocite{Peters2018}. \gls{elmo} combineert informatie uit alle interne lagen van het taalmodel tot een gewogen vectorrepresentatie voor elk woord, waardoor zowel semantische als contextuele betekenissen van woorden kunnen worden vastgelegd.
+
+\section{Samenstellen van een dataset}
+\label{sec:samenstellen-van-een-dataset}
+
+Het is niet mogelijk om een grootschalige, gelabelde dataset van nieuwsartikelen van \gls{hln} te verkrijgen. Handmatige labeling is bovendien niet haalbaar, vanwege de complexiteit en tijdsintensiviteit van het beoordelen van bias in nieuwsartikelen. Om deze beperking te omzeilen, wordt gekozen voor een trainingsstrategie waarbij het model wordt getraind op drie verschillende datasets, die elk een specifieke rol vervullen binnen het classificatieproces.
+
+\begin{enumerate}
+    \item \textit{Metadata-dataset}: Deze dataset bevat aanvullende informatie over nieuwsartikelen, zoals publiekelijk beschikbare gegevens over de auteur(s). Deze informatie wordt verzameld via webscraping van de \gls{hln}-website. De metadata kan patronen in partijdigheid over meerdere publicaties van een auteur identificeren, die gebruikt worden als aanvullende context bij de biasclassificatie.
+    \item \textit{Sentence-level dataset}: Op zinsniveau gelabelde datasets, zoals de \textit{FactNews}-dataset \autocite{Vargas2024}, voorgesteld in het onderzoek van \textcite{Vargas2023}, worden gebruikt om een model te trainen dat indicaties van bias binnen individuele zinnen kan detecteren. Deze datasets zijn oorspronkelijk in andere talen beschikbaar, waardoor ze vooraf worden vertaald naar het Nederlands. De datasets maken het mogelijk om zinnen die het sterkst bijdragen aan de uiteindelijke biasclassificatie van een artikel te identificeren.
+    \item \textit{Document-level dataset}: Voor training op documentniveau wordt een fijnschalige gelabelde dataset van \gls{hln}-artikelen gebruikt, waarbij biaslabels worden afgeleid uit externe media bias checkers, zoals \textit{Media Bias} en \textit{Ground News}. Als alternatief kan gebruik worden gemaakt van bestaande document-level datasets, zoals de \textit{NewsMediaBias-Plus} dataset \autocite{Raza2024}, waarbij artikelen vooraf worden vertaald naar het Nederlands. Deze dataset wordt gebruikt voor de globale biasclassificatie van een nieuwsartikel.
+\end{enumerate}
+
+Het uiteindelijke model bestaat uit drie pipelines die elk worden getraind op hun respectievelijke dataset. De metadata-pipeline identificeert auteurspatronen, de sentence-level pipeline detecteert zinsniveau-bias, en de document-level pipeline classificeert het artikel als geheel. De outputs van de metadata- en sentence-level pipelines geven invloed tijdens de document-level pipeline. Deze structuur wordt ook weergegeven in figuur \ref{fig:dataset-pipeline}. Door deze aanpak kan een model ontwikkeld worden zonder dat een grootschalige, handmatig gelabelde dataset van \gls{hln}-artikelen vereist is.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{dataset-pipeline.png}
+  \caption[Dataset pipeline]{Overzicht van de trainingsstrategie met drie datasets: metadata-, sentence-level- en document-level datasets, en de bijbehorende pipelines die gebruikt worden voor biasclassificatie.}
+  \label{fig:dataset-pipeline}
+\end{figure}

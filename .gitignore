@@ -37,6 +37,7 @@
 *.fdb_latexmk
 *.synctex
 *.synctex.gz
+*.synctex(busy)
 *.synctex.gz(busy)
 *.pdfsync
 *.tcp
@@ -79,6 +80,7 @@ acs-*.bib
 *.glg
 *.glo
 *.gls
+*.glsdefs
 
 # hyperref
 *.brf
@@ -105,6 +107,7 @@ acs-*.bib
 # minted
 *.pyg
 _minted-*
+*.minted
 
 # morewrites
 *.mw
