@@ -14,6 +14,8 @@ In de literatuur wordt journalistieke bias in verschillende vormen geclassificee
 
 Bij \textit{ideology bias} wordt de inhoud van een artikel gestuurd in een bepaalde ideologische richting. Vaak reflecteren deze ideologische richtingen de voorkeuren van het mediabedrijf en haar doelgroep \autocite{Mullainathan2002}. Het sturen van informatie in bepaalde politieke richtingen is ook waargenomen bij VTM Nieuws, zoals gerapporteerd in het onpartijdigheidsrapport van de \gls{vrm} \autocite{VanAelst2024}.
 
+Recente studies tonen aan dat de relatie tussen de ideologische voorkeur van journalisten en hun berichtgeving niet altijd duidelijk is. Hoewel journalisten gemiddeld vaker een linksere visie hebben, blijft de inhoud van nieuwsartikelen vaak neutraal. Dit komt doordat journalisten door objectiviteit hun eigen mening proberen te beperken \autocite{Coddington2026}. Ideologische voorkeuren komen daardoor vaker naar voren in subtielere vormen, zoals woordkeuze en framing, dan in een duidelijke politieke richting.
+
 \subsection{Spin bias}
 
 In het geval van \textit{spin bias} wordt informatie gemanipuleerd met als doel het artikel opvallender of sensationeler te maken. Door de concurrentie tussen nieuwsorganisaties worden journalisten aangemoedigd om opvallende artikelen te schrijven, wat in sommige gevallen kan leiden tot het verdraaien of overdrijven van feiten \autocite{Alsem2008}. Er is nog geen onderzoek uitgevoerd naar het aandeel van \textit{spin bias} in artikelen gepubliceerd door \gls{hln}.
@@ -70,7 +72,7 @@ Er bestaan verschillende voorgetrainde \gls{bert}-modellen, beschikbaar via \tex
 Een andere methode die gebruikt kan worden is \textit{unsupervised learning}, waarbij de dataset niet gelabeld is. Hierbij wordt vaak gebruik gemaakt van vectorisatiemethoden in combinatie met clusteringalgoritmen \autocite{UmarNadeem2022}. Uit een onderzoek van \textcite{UmarNadeem2022} werd geconcludeerd dat deze methode niet effectief is voor het vinden van tekstpatronen die essentieel zijn voor het detecteren van bias. Figuur \ref{fig:unsupervised-learning-scheme} illustreert het verschil tussen supervised en unsupervised learning.
 
 \begin{figure}
-  \centering %-------------------------------
+  \centering
   \includegraphics[width=0.6\textwidth]{unsupervised_vs_supervised.png}
   \caption[Supervised vs Unsupervised learning]{Schematische weergave van het verschil in werking tussen supervised en unsupervised learning. Bron: \textcite{Morimoto2021}.}
   \label{fig:unsupervised-learning-scheme}
@@ -148,3 +150,91 @@ Het uiteindelijke model bestaat uit drie pipelines die elk worden getraind op hu
   \caption[Dataset pipeline]{Overzicht van de trainingsstrategie met drie datasets: metadata-, sentence-level- en document-level datasets, en de bijbehorende pipelines die gebruikt worden voor biasclassificatie.}
   \label{fig:dataset-pipeline}
 \end{figure}
+
+\section{Preprocessing van data}
+\label{sec:preprocessing-van-data}
+
+Vooraleer een machine learning-model kan worden getraind, is het noodzakelijk om de data te preprocessen. Hierbij wordt de data getransformeerd naar een formaat waaruit het model effectief kan leren. Aangezien dit onderzoek \gls{nlp}-taken omvat, is de preprocessing van tekstuele data een cruciale stap.
+
+\begin{itemize}
+    \item \textit{Tokenization} is het proces waarbij een tekst wordt opgesplitst in kleinere eenheden, zoals woorden of zinnen, die tokens worden genoemd. Hierdoor kunnen individuele woorden of zinnen worden geanalyseerd en verwerkt door het model.
+    \item \textit{Stop-word removal} is het proces waarbij veelvoorkomende woorden die weinig betekenis toevoegen, zoals lidwoorden en voorzetsels, worden verwijderd. Dit helpt om de focus te leggen op de betekenisvollere woorden.
+    \item \textit{Lowercase conversion} is het proces waarbij alle letters in een tekst worden omgezet naar kleine letters. Hierdoor hoeft het model geen onderscheid te maken tussen woorden zoals "Nieuws" en "nieuws".
+    \item \textit{Stemming} is het proces waarbij woorden worden teruggebracht tot hun stam. De woorden "loopt" en "lopen" worden bijvoorbeeld teruggebracht naar "loop". Dit vermindert variatie in woordvormen en helpt het model om gelijkaardige woorden als één woord te behandelen \autocite{Uysal2014}.
+    \item \textit{Lemmatization} is een gelijkaardig proces waarbij woorden worden herleid tot hun correcte woordenboekvorm. Het woord "was" wordt bijvoorbeeld herleid naar "zijn". In tegenstelling tot stemming houdt lemmatization rekening met de betekenis en grammaticale context van de woorden \autocite{Islam2025}.
+\end{itemize}
+
+\section{Splitsen van data}
+\label{sec:splitsen-van-data}
+
+Het opsplitsen van een dataset in afzonderlijke subsets is een belangrijke stap binnen het machine learning proces. Een correcte datasplit maakt het mogelijk om modellen te trainen, te valideren en te evalueren.
+
+\subsection{Train-, validatie- en testset}
+
+Bij een train-validatie-test splitsing wordt de dataset verdeeld in drie subsets:
+
+\begin{itemize}
+    \item \textit{Trainingsset}: wordt gebruikt om het model te trainen.
+    \item \textit{Validatieset}: wordt gebruikt om de prestaties van het model te monitoren tijdens het trainingsproces.
+    \item \textit{Testset}: wordt gebruikt voor de finale evaluatie van het model.
+\end{itemize}
+
+\subsection{Stratified sampling}
+
+Bij classificatieproblemen met een ongelijke klassenverdeling kan \textit{stratified sampling} worden toegepast. Hierbij wordt ervoor gezorgd dat de verhouding tussen de verschillende klassen behouden blijft in elke subset van de dataset. Dit voorkomt dat bepaalde klassen ondervertegenwoordigd zijn in de train-, validatie- of testset.
+
+\subsection{Cross-validation}
+
+Bij \textit{k-fold cross-validation} wordt de dataset opgesplitst in $k$ gelijke delen. Het model wordt nadien meerdere keren getraind, waarbij telkens één deel wordt gebruikt als validatieset en de overige delen als trainingsset. Op deze manier wordt elk deel van de dataset één keer gebruikt voor validatie. Dit zorgt voor een betrouwbaarder beeld van de prestaties van het model.
+
+\section{Evaluatiemethoden}
+\label{sec:evaluatiemethoden}
+
+Het evalueren van modellen voor media-biasclassificatie kan op verschillende manieren worden uitgevoerd. Het is essentieel om evaluatiemethoden te selecteren die aansluiten bij de doelstellingen van dit onderzoek.
+
+\subsection{Klassieke classificatiemetrieken}
+
+Voor de evaluatie van classificatiemodellen kunnen standaardmetrieken uit de machine learning-literatuur worden toegepast, waaronder \textit{accuracy}, \textit{precision}, \textit{recall} en de \textit{F1-score}. Deze metrieken bieden elk een ander perspectief op de prestaties van het model.
+
+\begin{itemize}
+    \item \textit{Accuracy} meet het percentage correct geclassificeerde voorbeelden. Deze metriek is eenvoudig te interpreteren, maar kan misleidend zijn bij een ongelijke klassenverdeling. Hierdoor kan de score hoog zijn wanneer het model goed presteert op de dominante klassen, terwijl het minder goed presteert op de minder frequente klassen.
+    \item \textit{Precision} meet de hoeveelheid correct voorspelde positieve gevallen. Deze metriek is relevant in scenario's waar het beperken van \textit{false positives} belangrijk is.
+    \item \textit{Recall} meet de hoeveelheid werkelijke positieve gevallen dat correct wordt voorspeld. Deze metriek is vooral belangrijk wanneer het vermijden van \textit{false negatives} cruciaal is.
+    \item De \textit{F1-score} is het harmonisch gemiddelde van precision en recall en biedt een gebalanceerde maat voor de prestaties van het model. Deze metriek is nuttig wanneer een trade-off tussen \textit{precision} en \textit{recall} moet worden gemaakt.
+    \item De \textit{macro F1-score} berekent het gemiddelde van de F1-scores over alle klassen, zonder rekening te houden met de frequentie van elke klasse. Hierdoor weegt elke klasse even zwaar mee, wat nuttig is bij datasets met een ongelijke klassenverdelingen.
+\end{itemize}
+
+\subsection{MBIB benchmark}
+
+Naast klassieke evaluatiemetrieken kan gebruik worden gemaakt van benchmarks die specifiek zijn ontworpen voor media-biasdetectie. \gls{mbib} is een benchmark die meerdere datasets combineert om de prestaties van media-biasclassificatiemodellen te evalueren \autocite{Wessel2023}.
+
+Deze benchmark bestaat uit datasets die verschillende vormen van bias bevatten, waaronder linguïstische, politieke en contextuele vormen van bias. Hierdoor maakt \gls{mbib} het mogelijk om de generalisatie van modellen te testen, waarbij prestaties worden gemeten aan de hand van de F1-score op zowel individuele datasets als een gecombineerde score over alle datasets.
+
+\section{Overfitting en underfitting}
+\label{sec:overfitting-en-underfitting}
+
+Bij het trainen van machine learning-modellen is het essentieel om een evenwicht te vinden tussen het leren van voldoende relevante patronen en het vermijden dat het model de trainingsdata te letterlijk onthoudt. Twee veelvoorkomende problemen zijn \textit{overfitting} en \textit{underfitting}.
+
+\begin{itemize}
+    \item \textit{Overfitting} ontstaat wanneer een model te sterk wordt afgestemd op de trainingsdata, waardoor het niet goed generaliseert naar nieuwe data. Er zijn verschillende methoden om overfitting te beperken:
+    \begin{itemize}
+        \item \textit{Regularisatie} is een methode die complexe patronen bestraft en het model stimuleert om algemenere patronen te leren.
+        \item \textit{Dropout} is een techniek waarbij tijdens het trainen willekeurig bepaalde onderdelen van het model tijdelijk worden uitgeschakeld, zodat het model niet afhankelijk wordt van specifieke onderdelen van de data.
+        \item \textit{Early stopping} is een methode waarbij het trainen wordt gestopt zodra de prestaties op een aparte validatieset verslechteren.
+        \item \textit{Cross-validation} is een techniek waarbij de dataset in meerdere subsets wordt verdeeld en het model meerdere keren wordt getraind en geëvalueerd op verschillende combinaties.
+    \end{itemize}
+    \item \textit{Underfitting} ontstaat wanneer een model onvoldoende complex is om relevante patronen te leren, wat leidt tot lage prestaties op zowel trainingsdata als nieuwe data. Mogelijke oplossingen zijn het gebruik van een complexer model en het toevoegen van meer of relevantere features.
+\end{itemize}
+
+\section{Bestaande libraries en tools}
+\label{sec:bestaande-libraries-en-tools}
+
+Voor de implementatie en evaluatie van media-bias classificatiemodellen kan gebruik worden gemaakt van verschillende bestaande libraries en tools.
+
+\begin{itemize}
+    \item \textit{Scikit-learn} is een veelgebruikte Python-library voor machine learning en biedt een uitgebreide set aan algoritmen en evaluatietools. De library bevat implementaties voor classificatie en preprocessing, en voorziet functionaliteiten voor evaluatie van modellen, zoals het berekenen van metrieken, het splitsen van datasets en het uitvoeren van cross-validation.
+    \item \textit{Hugging Face Transformers} is een library die toegang biedt tot een grote collectie van voorgetrainde transformer-modellen die ingezet kunnen worden voor verschillende \gls{nlp}-taken. Deze modellen maken gebruik van deep learning-architecturen en genereren contextuele representaties van tekst, wat essentieel is voor het detecteren van bias.
+    \item \textit{Pandas} is een Python-library voor data-analyse en -manipulatie en wordt vaak gebruikt voor het verwerken van datasets. \textit{Pandas} maakt het mogelijk om data efficiënt te transformeren en analyseren, wat handig is tijdens het preprocessen van data en het analyseren van modelresultaten.
+    \item \textit{Matplotlib} en \textit{Seaborn} zijn Python-libraries voor datavisualisatie. Ze bieden functionaliteiten voor het genereren van grafieken en visualisaties, wat nuttig is voor het analyseren van modelprestaties en het interpreteren van resultaten.
+    \item \textit{BeautifulSoup} is een Python-library voor het parsen van HTML-documenten. Deze library wordt gebruikt voor het extraheren van tekst uit webpagina's, wat essentieel is voor het verzamelen van nieuwsartikelen.
+\end{itemize}

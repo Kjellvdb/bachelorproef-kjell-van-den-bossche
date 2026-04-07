@@ -6,7 +6,7 @@ Dit hoofdstuk geeft een overzicht van het plan van aanpak voor de uitvoering van
 \section{Opstellen van een dataset}
 \label{sec:opstellen-van-een-dataset}
 
-Het opstellen van een dataset is essentieel voor het trainen en evalueren van het model voor het detecteren van journalistieke partijdigheid. In dit onderzoek worden drie verschillende datasets gecombineerd om zowel metadata, zinsniveau- als documentniveau-informatie te bevatten.
+Het opstellen van een dataset is essentieel voor het trainen en evalueren van het model voor het detecteren van journalistieke partijdigheid. Zoals beschreven in Hoofdstuk \ref{ch:stand-van-zaken} wordt een trainingsstrategie toegepast waarbij het model wordt getraind op drie verschillende datasets, die elk een specifieke rol vervullen binnen het classificatieproces.
 
 \subsection{Metadata-dataset}
 
@@ -49,31 +49,56 @@ De pipeline bestaat uit de volgende fasen:
 
 \begin{enumerate}
     \item Data-inname
-    \item Preprocessing (tokenisatie, normalisatie en vertaling indien nodig)
+    \item Preprocessing
     \item Feature-engineering
     \item Modeltraining en validatie
 \end{enumerate}
 
+De outputs van de metadata- en sentence-level pipelines geven invloed binnen de document-level pipeline.
+
+\subsection{Preprocessing}
+
+Tijdens de preprocessingfase worden de ruwe zinnen en artikelen omgezet naar een vorm die beter geschikt is voor het trainen van modellen. De volgende preprocessingstappen worden uitgevoerd in de aangegeven volgorde:
+
+\begin{enumerate}
+    \item Het verwijderen van HTML-tags en andere niet-tekstuele elementen
+    \item Het vertalen van de tekst naar het Nederlands (indien nodig)
+    \item Het omzetten van alle tekst naar kleine letters (\textit{lowercase conversion})
+    \item Het splitsen van de tekst in afzonderlijke tokens (\textit{tokenization})
+    \item Het verwijderen van stopwoorden (\textit{stop-word removal})
+    \item Het herleiden van woorden naar hun correcte woordenboekvorm (\textit{lemmatization})
+\end{enumerate}
+
+\subsection{Feature-engineering}
+
+Na de preprocessing wordt de tekst omgezet naar een numerieke representatie met behulp van contextuele woordembeddings. Daarnaast worden aanvullende features toegevoegd, zoals sentiment-scores en metadata-gebaseerde kenmerken, die kunnen bijdragen aan het detecteren van partijdigheid.
+
+\subsection{Datasplit}
+
+Voor het trainen en evalueren van de modellen worden de datasets opgesplitst in afzonderlijke subsets.
+
+\begin{itemize}
+    \item De trainingsdata wordt gebruikt om de modellen te trainen.
+    \item De validatiedata wordt gebruikt om de prestaties tijdens het trainen te monitoren.
+    \item De testdata wordt gebruikt voor de finale evaluatie.
+\end{itemize}
+
+Bij de splitsing wordt \textit{stratified sampling} toegepast om ervoor te zorgen dat de verhouding tussen de verschillende klassen behouden blijft in elke subset. Daarnaast wordt \textit{cross-validation} toegepast om de prestaties van het model te kunnen beoordelen op een gegeneraliseerde manier.
+
 \section{Trainen en evalueren}
 \label{sec:trainen-en-evalueren}
 
-De componenten worden afzonderlijk getraind op hun respectieve datasets. Een train-validatie-testverdeling wordt gehanteerd om overfitting te voorkomen. Tijdens het trainingsproces worden hyperparameters geoptimaliseerd om de prestaties van elk component te maximaliseren.
+\subsection{Standaard evaluatiemetrieken}
 
-Voor evaluatie worden standaard classificatiemetrieken toegepast:
+De prestaties van de modellen worden geëvalueerd met behulp van standaard classificatiemetrieken, waaronder \textit{accuracy}, \textit{precision}, \textit{recall} en de \textit{F1-score}. Deze metrieken geven inzicht in hoe goed het model correcte voorspellingen maakt en hoe het omgaat met fouten.
 
-\begin{itemize}
-    \item Accuracy
-    \item Precision
-    \item Recall
-    \item F1-score
-\end{itemize}
+\subsection{MBIB benchmark}
 
-Naast de afzonderlijke training en evaluatie van de componenten wordt ook de volledige pipeline geëvalueerd op de testset van \gls{hln}-artikelen.
+Naast standaardmetrieken wordt het model geëvalueerd met behulp van de \gls{mbib}-benchmark \autocite{Wessel2023}. Deze benchmark combineert meerdere datasets en maakt het mogelijk om de generalisatiecapaciteit van het model te evalueren over verschillende vormen van bias.
 
-\section{Vergelijkende evaluatie met bestaande tools}
-\label{sec:vergelijkende-evaluatie-met-bestaande-tools}
+\subsection{Vergelijking met bestaande tools}
 
-De prestaties van het ontwikkelde model worden vergeleken met bestaande mediabias-tools, waaronder \textit{Media Bias} en \textit{Ground News}. Deze tools worden gebruikt als benchmark om de effectiviteit van het model te beoordelen. De vergelijking wordt uitgevoerd op dezelfde testset van \gls{hln}-artikelen, waarna de resultaten van het model worden vergeleken met de classificaties van de externe tools.
+De resultaten van het model worden ook vergeleken met bestaande mediabias-tools, zoals \textit{Ground News} en \textit{Media Bias}. Hierbij wordt nagegaan in welke mate de voorspellingen overeenkomen en waar verschillen optreden.
 
 \section{Implementatie van een browserextensie}
 \label{sec:implementatie-van-een-browserextensie}
@@ -93,4 +118,19 @@ De resultaten van de evaluatiefase en benchmarktesten worden geanalyseerd, waarb
     \item Een vergelijking van de voorspellingen van het model met die van bestaande mediabias-tools.
 \end{itemize}
 
-Op basis van deze analyse worden conclusies getrokken over de effectiviteit van het model en worden mogelijke verbeterpunten voor toekomstige onderzoeken geïdentificeerd.
+Naast algemene evaluatiemetrieken wordt gebruikgemaakt van een \textit{confusion matrix}, zie Tabel \ref{tab:confusion-matrix}, om de verschillende types fouten te analyseren.
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|c|c}
+     & \textbf{Voorspeld: Neutraal} & \textbf{Voorspeld: Partijdig} \\
+    \hline
+    \textbf{Werkelijk: Neutraal} & True Negative (TN) & False Positive (FP) \\
+    \hline
+    \textbf{Werkelijk: Partijdig} & False Negative (FN) & True Positive (TP) \\
+  \end{tabular}
+  \caption[Confusion matrix]{Overzicht van correcte en foutieve classificaties van het model.}
+  \label{tab:confusion-matrix}
+\end{table}
+
+De confusion matrix maakt het mogelijk om inzicht te krijgen in het aantal \textit{false positives} en \textit{false negatives}.
