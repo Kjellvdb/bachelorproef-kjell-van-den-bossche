@@ -29,9 +29,9 @@
     \listof{listing}{\listoflistingscaption}
 }
 
-% Other packages not already included can be imported here
 \usepackage{lipsum} % For dummy text, can be removed
 \usepackage[acronym]{glossaries}
+\usepackage{parskip}
 \makeglossaries
 
 \author{Kjell Van Den Bossche}
@@ -77,6 +77,7 @@
 \newacronym{glove}{GloVe}{Global Vectors}
 \newacronym{elmo}{ELMo}{Embeddings from Language Models}
 \newacronym{lstm}{LSTM}{Long Short-Term Memory}
+\newacronym{mbib}{MBIB}{Media Bias Identification Benchmark}
 
 \input{voorwoord}
 
@@ -114,9 +115,6 @@ Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat 
 Dit onderzoek richt zich op de automatische detectie en classificatie van journalistieke partijdigheid in nieuwsartikelen van Het Laatste Nieuws (HLN), met als doel lezers bewust te maken van mogelijke vooringenomenheid in hun dagelijkse nieuwsconsumptie. In de afgelopen jaren is het aantal bevooroordeelde nieuwsberichtgevingen bij DPG Media (moederbedrijf van VTM en HLN) toegenomen. Volgens het onpartijdigheidsrapport van de Vlaamse Regulator voor de Media blijkt dat VTM Nieuws in haar berichtgeving bepaalde politieke partijen bevoordeelt, wat op lange termijn kan leiden tot afnemend vertrouwen in de media. Om meer transparantie te bieden over de mogelijke vooringenomenheid in nieuwsartikelen van Het Laatste Nieuws, wordt een browserextensie ontwikkeld die de partijdigheid van een nieuwsartikel automatisch analyseert zonder de gebruikservaring te verstoren. Het onderzoek bestaat uit een literatuurstudie naar de verschillende vormen en indicatoren van journalistieke vooringenomenheid, gevolgd door het samenstellen van een dataset van nieuwsartikelen en het trainen van een classificatiemodel. De verwachte meerwaarde van dit onderzoek is een gebruiksvriendelijk hulpmiddel dat lezers ondersteunt bij het kritisch consumeren van het nieuws.
 
 \input{../voorstel/voorstel-inhoud}
-
-% TODO: Voeg hier eventuele andere bijlagen toe.
-%\input{...}
 
 \backmatter{}
 
