@@ -1,0 +1,109 @@
+\chapter{Resultaten}
+\label{ch:resultaten}
+
+In dit hoofdstuk worden de resultaten van de getrainde modellen geanalyseerd. Zoals beschreven in Hoofdstuk \ref{ch:methodologie} worden zowel het sentence-level model als het document-level model geëvalueerd aan de hand van standaard classificatiemetrieken.
+
+Daarnaast wordt de volledige pipeline toegepast op een dataset van \gls{hln}-artikelen, waarbij de gegenereerde biasclassificaties worden geanalyseerd. Tot slot wordt een vergelijking gemaakt met bestaande mediabias-tools om de voorspellingen te beoordelen.
+
+\section{Prestaties van de modellen}
+\label{sec:prestaties-van-modellen}
+
+De prestaties van de modellen werden geëvalueerd op hun respectievelijke testsets. Voor zowel het sentence-level model als het document-level model werden standaard classificatiemetrieken berekend, waaronder accuracy, precision, recall en de macro F1-score.
+
+\subsection{FactNews-model}
+
+Tabel \ref{tab:factnews-metrics} geeft een overzicht van de prestaties van het sentence-level model, getraind op de FactNews-dataset. De bijhorende \textit{confusion matrix} wordt weergegeven in Tabel \ref{tab:factnews-cm}.
+
+Het model behaalt een accuracy van 0.76, maar de macro F1-score van 0.57 toont aan dat er een onevenwichtige prestatieverdeling is tussen de klassen. Dit verschil wordt veroorzaakt door een duidelijke klasse-ongelijkheid in de dataset, waarbij de klasse `Not Biased' (846 \textit{samples}) sterk oververtegenwoordigd is ten opzichte van de klasse `Biased' (83 \textit{samples}).
+
+Dit effect is ook zichtbaar in de confusion matrix (Tabel \ref{tab:factnews-cm}). Het model presteert duidelijk beter op de dominante klasse (`Not Biased'), terwijl de prestaties op de klasse `Biased' lager liggen. De lage precision voor deze klasse (0.20) geeft aan dat een groot aantal niet-partijdige zinnen foutief als partijdig wordt geclassificeerd.
+
+De recall voor de klasse `Biased' bedraagt 0.57, wat betekent dat iets meer dan de helft van de partijdige zinnen correct wordt herkend. Hierdoor blijft er ook een groot aantal \texit{false negatives} aanwezig.
+
+Deze resultaten tonen aan dat het model voornamelijk goed presteert op niet-par\-tijdige zinnen en minder nauwkeurig is in het detecteren van bias op zinsniveau.
+
+\begin{table}
+    \centering
+    \begin{tabular}{lccc}
+        & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+        \hline
+        Not Biased & 0.95 & 0.77 & 0.85 \\
+        Biased & 0.20 & 0.57 & 0.29 \\
+        \hline
+        \textbf{Macro average} & 0.57 & 0.67 & 0.57 \\
+        \textbf{Weighted average} & 0.88 & 0.76 & 0.80 \\
+    \end{tabular}
+    \vspace{0.2cm}
+    
+    \textbf{Accuracy:} 0.76
+    \caption{Prestatiemetrieken voor het FactNews-model}
+    \label{tab:factnews-metrics}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{c|cc}
+        & \multicolumn{2}{c}{\textbf{Voorspeld}} \\
+        \textbf{Werkelijk} & \textbf{Not Biased} & \textbf{Biased} \\
+        \hline
+        Not Biased & 655 & 191 \\
+        Biased & 36 & 47 \\
+    \end{tabular}
+    \caption{Confusion matrix voor het FactNews-model}
+    \label{tab:factnews-cm}
+\end{table}
+
+\subsection{NewsMediaBias-Plus model}
+
+Tabel \ref{tab:nmbp-metrics} toont de prestaties van het document-level model, getraind op de News\-MediaBias-Plus dataset. De bijhorende confusion matrix wordt weergegeven in Tabel \ref{tab:nmbp-cm}.
+
+Het document-level model behaalt een accuracy van 0.74 en een macro F1-score van 0.72, wat wijst op een meer gebalanceerde prestatie in vergelijking met het sentence-level model.
+
+De resultaten tonen aan dat het model in staat is om beide klassen redelijk consistent te classificeren. De hogere precision voor de klasse `Biased' (0.88) toont aan dat wanneer het model een artikel als partijdig voorspelt, deze voorspelling in de meeste gevallen correct is. Tegelijkertijd ligt de precision voor de klasse `Not Biased' lager (0.56), wat aantoont dat een aantal neutrale artikelen foutief als partijdig worden geclassificeerd.
+
+De recall voor beide klassen liggen dicht bij elkaar (0.77 en 0.73), wat aantoont dat het model beide klassen in dezelfde mate weet te detecteren. Het document-level model presteert in het algemeen beter dan het sentence-level model, wat aantoont dat  biasdetectie op artikelniveau minder gevoelig is voor ruis en contextverlies dan detectie op zinsniveau.
+
+\begin{table}
+    \centering
+    \begin{tabular}{lccc}
+        & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \\
+        \hline
+        Not Biased & 0.56 & 0.77 & 0.65 \\
+        Biased & 0.88 & 0.73 & 0.80 \\
+        \hline
+        \textbf{Macro average} & 0.72 & 0.75 & 0.72 \\
+        \textbf{Weighted average} & 0.78 & 0.74 & 0.75 \\
+    \end{tabular}
+    \vspace{0.2cm}
+    
+    \textbf{Accuracy:} 0.74
+    \caption{Prestatiemetrieken voor het NewsMediaBias-Plus model}
+    \label{tab:nmbp-metrics}
+\end{table}
+
+\begin{table}
+    \centering
+    \begin{tabular}{c|cc}
+        & \multicolumn{2}{c}{\textbf{Voorspeld}} \\
+        \textbf{Werkelijk} & \textbf{Not Biased} & \textbf{Biased} \\
+        \hline
+        Not Biased & 1460 & 440 \\
+        Biased & 1147 & 3095 \\
+    \end{tabular}
+    \caption{Confusion matrix voor het NewsMediaBias-Plus model}
+    \label{tab:nmbp-cm}
+\end{table}
+
+\section{Toepassing op HLN-artikelen}
+\label{sec:toepassing-hln-artikelen}
+
+De volledige pipeline werd toegepast op een dataset van 2500 \gls{hln}-artikelen. De pipeline classificeert 70\% van de artikelen als `Not Biased' en 30\% van de artikelen als `Biased'.
+
+Uit de resultaten blijkt dat lokale reportages vaker als `Biased' worden aangeduid dan andere nieuwssecties. Op auteursniveau is er geen duidelijk patroon zichtbaar. Dit wijst erop dat er geen individuele auteurs zijn die vaker als partijdig worden geclassificeerd, en dat de classificatie wordt bepaald door de inhoud van het artikel.
+
+\section{Vergelijking met bestaande tools}
+\label{sec:vergelijking-bestaande-tools}
+
+De voorspellingen van het model werden vergeleken met bestaande mediabias-tools (\textit{Ground News} en \textit{Media Bias Fact Check}). Deze vergelijking werd uitgevoerd op dezelfde dataset van 2500 artikelen.
+
+Beide tools classificeren \gls{hln} als licht-rechts partijdig. Deze vaststelling is consistent met de klasse-verdeling van het model, waarbij 30\% van de artikelen als `Biased' wordt geclassificeerd. Dit wijst erop dat het model een vergelijkbaar globaal bias-patroon detecteert als de externe tools.

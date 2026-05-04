@@ -1,29 +1,9 @@
-% TODO: De "abstract" of samenvatting is een kernachtige (~ 1 blz. voor een
-% thesis) synthese van het document.
-%
-% Een goede abstract biedt een kernachtig antwoord op volgende vragen:
-%
-% 1. Waarover gaat de bachelorproef?
-% 2. Waarom heb je er over geschreven?
-% 3. Hoe heb je het onderzoek uitgevoerd?
-% 4. Wat waren de resultaten? Wat blijkt uit je onderzoek?
-% 5. Wat betekenen je resultaten? Wat is de relevantie voor het werkveld?
-%
-% Daarom bestaat een abstract uit volgende componenten:
-%
-% - inleiding + kaderen thema
-% - probleemstelling
-% - (centrale) onderzoeksvraag
-% - onderzoeksdoelstelling
-% - methodologie
-% - resultaten (beperk tot de belangrijkste, relevant voor de onderzoeksvraag)
-% - conclusies, aanbevelingen, beperkingen
-%
-% LET OP! Een samenvatting is GEEN voorwoord!
-
-%%---------- Samenvatting -----------------------------------------------------
-% De samenvatting in de hoofdtaal van het document
-
 \chapter*{\IfLanguageName{dutch}{Samenvatting}{Abstract}}
 
-\lipsum[1-4]
+In dit onderzoek wordt een proof-of-concept ontwikkeld die aantoont dat automatische detectie van journalistieke partijdigheid in nieuwsartikelen van Het Laatste Nieuws (HLN) mogelijk is. Aangezien nieuws dat niet op neutrale wijze wordt weergegeven kan bijdragen aan een afnemend vertrouwen in de traditionele media, is er nood aan onderzoek naar automatische detectiesystemen die journalistieke bias kunnen identificeren. De centrale onderzoeksvraag luidt: Hoe kan een browserextensie ontwikkeld worden die artikelen van Het Laatste Nieuws automatisch classificeert op basis van hun partijdigheid, met minimale impact op de gebruikservaring?
+
+Om deze doelstelling te bereiken werd een pipeline ontwikkeld, bestaande uit een sentence-level en document-level classificatiemodel. Deze modellen werden getraind op bestaande datasets voor mediabiasdetectie en geëvalueerd met standaard classificatiemetrieken zoals accuracy, precision, recall en F1-score. Vervolgens werd het systeem toegepast op een dataset van HLN-artikelen om de praktische werking te analyseren. Daarnaast werd een vergelijking gemaakt met bestaande mediabias-tools zoals \textit{Ground News} en \textit{Media Bias Fact Check}.
+
+De resultaten tonen aan dat het mogelijk is om HLN-artikelen automatisch te classificeren in `Not Biased' en `Biased', waarbij het document-level model beter presteert dan het sentence-level model. Het sentence-level model wordt beïnvloed door een ongelijke klasseverdeling in de dataset, wat de detectie van de minder voorkomende klasse verstoort. De toepassing op HLN-artikelen toont aan dat bepaalde nieuwssecties vaker als partijdig worden geclassificeerd, terwijl op auteursniveau geen duidelijke patronen zichtbaar zijn. De vergelijking met externe tools toont een algemene overeenstemming in het globale biaspatroon van HLN.
+
+Dit onderzoek bevestigt de haalbaarheid van automatische biasdetectie binnen een browseromgeving. Tegelijkertijd blijkt dat verdere optimalisatie nodig is om de betrouwbaarheid te verhogen, onder meer op het vlak van databalans en modelverbetering. De resultaten vormen een basis voor verder onderzoek naar betrouwbare en interpreteerbare biasdetectie in online nieuwsmedia.

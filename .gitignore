@@ -143,3 +143,4 @@ data/
 state.json
 user_data/
 .venv/
+*temp*
