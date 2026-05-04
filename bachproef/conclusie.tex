@@ -1,13 +1,14 @@
 \chapter{Conclusie}
 \label{ch:conclusie}
 
-% TODO: Trek een duidelijke conclusie, in de vorm van een antwoord op de
-% onderzoeksvra(a)g(en). Wat was jouw bijdrage aan het onderzoeksdomein en
-% hoe biedt dit meerwaarde aan het vakgebied/doelgroep? 
-% Reflecteer kritisch over het resultaat. In Engelse teksten wordt deze sectie
-% ``Discussion'' genoemd. Had je deze uitkomst verwacht? Zijn er zaken die nog
-% niet duidelijk zijn?
-% Heeft het onderzoek geleid tot nieuwe vragen die uitnodigen tot verder 
-%onderzoek?
+Dit onderzoek had als doel het ontwikkelen van een proof-of-concept (\gls{poc}) voor het automatisch detecteren van journalistieke bias in nieuwsartikelen van Het Laatste Nieuws (\gls{hln}), geïntegreerd in een browserextensie.
 
-\lipsum[76-80]
+Op basis van de resultaten kan worden geconcludeerd dat het mogelijk is om \gls{hln}-artikelen automatisch te classificeren op basis van hun partijdigheid met behulp van de ontwikkelde pipeline. Het systeem verdeelt artikelen in de klassen `Not Biased' en `Biased', waarbij de volledige artikelinhoud de belangrijkste informatiebron vormt voor de classificatie. Hiermee wordt de centrale onderzoeksvraag beantwoord: een browserextensie kan worden ontwikkeld die \gls{hln}-artikelen automatisch classificeert op basis van partijdigheid.
+
+Het model is gevoelig voor linguïstische en inhoudelijke kenmerken in de tekst. Daarnaast is het behoud van semantische informatie binnen het classificatieproces essentieel voor een bruikbare detectie van bias.
+
+Het sentence-level model wordt beperkt door een klasse-ongelijkheid in de trainingsdata, waardoor de detectie van de minder voorkomende klasse `Biased' minder accuraat verloopt. Hierdoor is de betrouwbaarheid van het aanduiden van zinnen die het sterkst bijdragen aan de classificatie beperkt. Het document-level model vertoont een meer gebalanceerde prestatie over beide klassen.
+
+De toepassing op \gls{hln}-artikelen toont aan dat bepaalde nieuwssecties, zoals lokale reportages, vaker als `Biased' worden geclassificeerd, terwijl op auteursniveau geen patroon zichtbaar is. De vergelijking met bestaande mediabias-tools toont een algemene overeenkomst in het globale bias-patroon van \gls{hln}.
+
+De resultaten tonen aan dat automatische biasdetectie binnen een browseromgeving haalbaar is, maar dat verdere verfijning nodig is om de betrouwbaarheid op zinsniveau te verbeteren. Verder onderzoek kan zich richten op het verbeteren van de balans tussen klassen, het verfijnen van de modellen, of het uitbreiden van het model naar andere nieuwsorganisaties.
