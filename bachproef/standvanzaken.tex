@@ -12,25 +12,27 @@ In de literatuur wordt journalistieke bias in verschillende vormen geclassificee
 
 \subsection{Ideology bias}
 
-Bij \textit{ideology bias} wordt de inhoud van een artikel gestuurd in een bepaalde ideologische richting. Vaak reflecteren deze ideologische richtingen de voorkeuren van het mediabedrijf en haar doelgroep \autocite{Mullainathan2002}. Het sturen van informatie in bepaalde politieke richtingen is ook waargenomen bij VTM Nieuws, zoals gerapporteerd in het onpartijdigheidsrapport van de \gls{vrm} \autocite{VanAelst2024}.
+Bij \textit{ideology bias} wordt de inhoud van een artikel gestuurd in een bepaalde ideologische richting. Vaak reflecteren deze ideologische richtingen de voorkeuren van het mediabedrijf en haar doelgroep \autocite{Mullainathan2002}.
 
-Recente studies tonen aan dat de relatie tussen de ideologische voorkeur van journalisten en hun berichtgeving niet altijd duidelijk is. Hoewel journalisten gemiddeld vaker een linksere visie hebben, blijft de inhoud van nieuwsartikelen vaak neutraal. Dit komt doordat journalisten door objectiviteit hun eigen mening proberen te beperken \autocite{Coddington2026}. Ideologische voorkeuren komen daardoor vaker naar voren in subtielere vormen, zoals woordkeuze en framing, dan in een duidelijke politieke richting.
+Een recente studie toont aan dat de relatie tussen de ideologische voorkeur van journalisten en hun berichtgeving niet eenduidig is. Hoewel journalisten gemiddeld vaker een linksere visie hebben, blijft de inhoud van nieuwsartikelen in veel gevallen relatief neutraal \autocite{Coddington2026}. Andere studies suggereren echter dat ideologische voorkeuren in sommige gevallen ook kunnen leiden tot com\-pensatie-effecten in de berichtgeving, waarbij journalisten met een linkse ideologische voorkeur eerder geneigd kunnen zijn om in een meer rechtse richting te rapporteren \autocite{Beckers2019}.
 
 \subsection{Spin bias}
 
-In het geval van \textit{spin bias} wordt informatie gemanipuleerd met als doel het artikel opvallender of sensationeler te maken. Door de concurrentie tussen nieuwsorganisaties worden journalisten aangemoedigd om opvallende artikelen te schrijven, wat in sommige gevallen kan leiden tot het verdraaien of overdrijven van feiten \autocite{Alsem2008}. Er is nog geen onderzoek uitgevoerd naar het aandeel van \textit{spin bias} in artikelen gepubliceerd door \gls{hln}.
+\textit{Spin bias} verwijst naar het presenteren van informatie op een manier die het artikel opvallender of sensationeler maakt. Door de concurrentie tussen nieuwsorganisaties worden journalisten aangemoedigd om opvallende artikelen te schrijven, wat in sommige gevallen kan leiden tot een versterkte of overdreven weergave van feiten \autocite{Alsem2008}. Er is nog geen onderzoek uitgevoerd naar het detecteren van \textit{spin bias} in artikelen gepubliceerd door \gls{hln}, aangezien dit type bias moeilijk te vertalen is naar een geautomatiseerd classificatiemodel en sterk afhangt van interpretatie van schrijfstijl.
 
 \subsection{Gatekeeping}
 
-\textit{Gatekeeping}, ook wel \textit{selection bias} genoemd, wordt gedefinieerd als het bepalen van wie bepaalde informatie, macht of kansen krijgt \autocite{CALD2025}. De auteur maakt een specifieke selectie van informatie voor het artikel en laat andere informatie achterwege. Voor nieuwsartikelen worden auteurs vaak gedwongen om een selectie van informatie te maken vanwege de beperkte ruimte \autocite{SaezTrumper2013}.
+\textit{Gatekeeping}, ook wel \textit{selection bias} genoemd, verwijst naar het bepalen welke informatie, perspectieven of gebeurtenissen opgenomen worden in nieuwsberichtgeving \autocite{CALD2025}. De auteur maakt een specifieke selectie van informatie voor het artikel en laat andere informatie achterwege. Voor nieuwsartikelen worden auteurs vaak gedwongen om een selectie van informatie te maken vanwege de beperkte ruimte \autocite{SaezTrumper2013}. Wanneer bepaalde perspectieven of informatie echter systematisch minder aan bod komen, kan dit bijdragen aan journalistieke partijdigheid.
 
 \subsection{Coverage bias}
 
-Bij \textit{coverage bias} wordt meer aandacht toegekend aan bepaalde onderdelen of personen in het artikel, en worden andere onderdelen of personen onderdrukt \autocite{DAlessio2006}. Deze extra aandacht kan zich op verschillende manieren uiten, zoals meer zendtijd op televisie, meer spreektijd op de radio of meer tekst in artikelen. Meer spreektijd geven aan bepaalde politieke personen is ook waargenomen bij VTM Nieuws \autocite{VanAelst2024}.
+Bij \textit{coverage bias} wordt meer aandacht toegekend aan bepaalde onderdelen of personen in het artikel, terwijl andere onderdelen of personen minder aan bod komen \autocite{DAlessio2006}. Deze extra aandacht kan zich op verschillende manieren uiten, zoals meer zendtijd op televisie, meer spreektijd op de radio of meer tekst in artikelen.
+
+In het onpartijdigheidsrapport van de \gls{vrm} wordt gerapporteerd dat VTM Nieuws verschillen vertoont in de spreektijd die aan politieke partijen wordt toegekend \autocite{VanAelst2024}. In het rapport worden deze verschillen onder meer verklaard door factoren zoals institutionele rol en de context van de berichtgeving. Hoewel deze verschillen in aandacht niet noodzakelijk wijzen op partijdigheid, kunnen systematische verschillen in zichtbaarheid bijdragen aan een onevenwichtige representatie binnen nieuwsberichtgeving.
 
 \subsection{Statement bias}
 
-\textit{Statement bias}, ook wel \textit{presentation bias} genoemd, verwijst naar het voordeliger omschrijven van bepaalde onderdelen of personen, ten koste van andere \autocite{SaezTrumper2013}. Volgens \textcite{DAlessio2006} kan een mediabericht pas beschouwd worden als neutraal wanneer het evenveel uitspraken bevat die in de ene richting voordelig zijn als uitspraken die in de tegenovergestelde richting voordelig zijn.
+\textit{Statement bias}, ook wel \textit{presentation bias} genoemd, verwijst naar het voordeliger omschrijven van bepaalde onderdelen of personen, ten koste van andere \autocite{SaezTrumper2013}. Volgens \textcite{DAlessio2006} kan een nieuwsbericht binnen deze definitie als gebalanceerd beschouwd worden wanneer het evenveel uitspraken bevat die in de ene richting voordelig zijn als uitspraken die in de tegenovergestelde richting voordelig zijn. Een overwicht aan uitspraken die één zijde bevoordelen wordt binnen deze definitie beschouwd als een vorm van bias. Wanneer een bericht geen bevoordelende uitspraken bevat, kan het als neutraal beschouwd worden.
 
 \section{Methoden om bias te detecteren}
 \label{sec:methoden-om-bias-te-detecteren}
@@ -74,7 +76,7 @@ Een andere methode die gebruikt kan worden is \textit{unsupervised learning}, wa
 \begin{figure}
   \centering
   \includegraphics[width=0.6\textwidth]{unsupervised_vs_supervised.png}
-  \caption[Supervised vs Unsupervised learning]{Schematische weergave van het verschil in werking tussen supervised en unsupervised learning. Bron: \textcite{Morimoto2021}.}
+  \caption[Supervised versus Unsupervised learning]{Schematische weergave van het verschil in werking tussen supervised en unsupervised learning. Bron: \textcite{Morimoto2021}.}
   \label{fig:unsupervised-learning-scheme}
 \end{figure}
 
@@ -147,7 +149,7 @@ Het is mogelijk om deze verschillende datasets te combineren binnen een pipeline
 \section{Preprocessing van data}
 \label{sec:preprocessing-van-data}
 
-Vooraleer een machine learning-model kan worden getraind, is het noodzakelijk om de data te preprocessen. Hierbij wordt de data getransformeerd naar een formaat waaruit het model effectief kan leren. Aangezien dit onderzoek \gls{nlp}-taken omvat, is de preprocessing van tekstuele data een cruciale stap.
+Vooraleer een machine learning-model kan worden getraind, is het noodzakelijk om de data te preprocessen. Hierbij wordt de data getransformeerd naar een formaat waaruit het model effectief kan leren. Binnen de literatuur worden verschillende preprocessingtechnieken toegepast in NLP-domein. Hieronder wordt een overzicht gegeven van veelgebruikte technieken.
 
 \begin{itemize}
     \item \textit{Tokenization} is het proces waarbij een tekst wordt opgesplitst in kleinere eenheden, zoals woorden of zinnen, die tokens worden genoemd. Hierdoor kunnen individuele woorden of zinnen worden geanalyseerd en verwerkt door het model.

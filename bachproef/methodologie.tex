@@ -1,12 +1,18 @@
 \chapter{\IfLanguageName{dutch}{Methodologie}{Methodology}}
 \label{ch:methodologie}
 
-Dit hoofdstuk geeft een overzicht van het plan van aanpak voor de uitvoering van het onderzoek. Het bouwt voort op de inzichten uit Hoofdstuk \ref{ch:stand-van-zaken} en dient als basis voor de uitvoering van de verschillende onderzoekstaken.
+Dit hoofdstuk beschrijft de methodologie die werd toegepast voor het ontwikkelen van een systeem voor automatische detectie van journalistieke partijdigheid in nieuwsartikelen. Op basis van de bevindingen uit Hoofdstuk \ref{ch:stand-van-zaken} werd gekozen voor een hybride aanpak waarbij bias zowel op zinsniveau als op documentniveau wordt geanalyseerd.
+
+Het systeem bestaat uit een sentence-level model dat bias-indicaties binnen individuele zinnen detecteert en een document-level model dat een globale classificatie van volledige nieuwsartikelen genereert. Door deze combinatie kan niet alleen een algemene bias-score worden bepaald, maar kan ook worden geanalyseerd welke zinnen het sterkst bijdragen aan de uiteindelijke voorspelling.
+
+Daarnaast werden artikelen van \gls{hln} verzameld via webscraping om het systeem te evalueren. De resultaten van het systeem werden vergeleken met bestaande mediabias-tools.
 
 \section{Opstellen van een dataset}
 \label{sec:opstellen-van-een-dataset}
 
 Het opstellen van een dataset is essentieel voor het trainen en evalueren van modellen voor het detecteren van journalistieke partijdigheid. Voor dit onderzoek werden twee bestaande gelabelde datasets gebruikt voor training en evaluatie.
+
+Er werd geen metadata-gebaseerde dataset samengesteld. Binnen dit onderzoek werd de beschikbare tijd en middelen gefocust op zinsniveau- en artikelniveau-analyse. Hierdoor werd geen metadata-gebaseerde pipeline ontwikkeld.
 
 \subsection{Sentence-level dataset}
 
@@ -22,7 +28,7 @@ Ook hier werd een opsplitsing gemaakt in trainings-, validatie- en testdata met 
 
 \subsection{HLN dataset}
 
-Daarnaast werden 2500 artikelen van \gls{hln} verzameld via webscraping. Deze dataset bevat geen labels en werd gebruikt voor inferentie en analyse van modeloutputs.
+Daarnaast werden 1800 unieke artikelen van \gls{hln} verzameld via webscraping. Deze dataset bevat geen labels en werd gebruikt voor inferentie en analyse van modeloutputs.
 
 De \gls{hln}-artikelen worden door het getrainde model geanalyseerd, waarbij zowel een globale bias-score als zinsniveau-scores worden gegenereerd. Deze combinatie maakt het mogelijk om naast een globale classificatie ook inzicht te krijgen in welke zinnen het meest bijdragen aan de voorspelling.
 
@@ -54,7 +60,7 @@ Tijdens de preprocessingfase werden ruwe teksten opgeschoond om ze geschikt te m
 
 \subsection{Datasplit}
 
-Voor het trainen en evalueren van de modellen werden de datasets opgesplitst in afzonderlijke subsets.
+Voor het trainen en evalueren van de modellen werden de datasets opgesplitst in afzonderlijke subsets volgens een 70-15-15 verdeling.
 
 \begin{itemize}
     \item De trainingsdata werd gebruikt om de modellen te trainen.
@@ -67,6 +73,20 @@ Bij de splitsing werd \textit{stratified sampling} toegepast om ervoor te zorgen
 \section{Trainen en evalueren}
 \label{sec:trainen-en-evalueren}
 
+In dit onderzoek wordt journalistieke bias onderzocht op basis van tekstuele kenmerken in nieuwsartikelen. De analyse richt zich op signalen zoals woordkeuze, framing en de manier waarop informatie wordt beschreven binnen een artikel.
+
+Vormen van bias die afhankelijk zijn van externe context vallen buiten de scope van dit onderzoek. Zo houdt het model geen rekening met de reputatie van journalisten, eerdere artikels van een journalist of historische gebeurtenissen die niet expliciet in de tekst vermeld worden. Deze afbakening werd gekozen omdat bestaande tekstgebaseerde modellen enkel werken op basis van de inhoud van individuele nieuwsartikelen.
+
+\subsection{Trainen}
+
+Voor het trainen van de modellen werd gebruikgemaakt van het voorgetrainde Nederlandse transformer-model \textit{RobBERT} \autocite{Delobelle2020}. Het model \texttt{DTAI-KULeuven/robbert-2023-dutch-large} werd gebruikt en bevat ongeveer 355 miljoen parameters. RobBERT is een BERT-gebaseerd model dat vooraf werd getraind op grote hoeveelheden Nederlandstalige tekst. Hierdoor kan het model context en semantische relaties binnen Nederlandse zinnen beter begrijpen.
+
+Er werd gekozen voor een BERT-gebaseerde architectuur omdat journalistieke bias vaak afhankelijk is van subtiele verschillen in woordkeuze en context. Klassieke embeddings zoals \gls{glove} koppelen aan elk woord één vaste vectorrepresentatie toe en houden geen rekening met context. Modellen zoals \gls{elmo} ondersteunen wel contextuele representaties, maar transformer-gebaseerde modellen zoals \gls{bert} presteren doorgaans beter op complexe \gls{nlp}-taken zoals tekstclassificatie en biasdetectie. Daarnaast is RobBERT specifiek getraind op Nederlandstalige corpora, waardoor het beter aansluit bij de analyse van Nederlandstalige nieuwsartikelen van \gls{hln}.
+
+Tijdens de preprocessing werd gebruikgemaakt van de \textit{spaCy}-bibliotheek met het model \texttt{nl\_core\_news\_sm}. Dit model werd gebruikt om woorden te herleiden naar hun woordenboekvorm. Daarnaast werd de tokenizer van het RobBERT-model gebruikt om teksten op te splitsen in tokens die verwerkt kunnen worden door het model.
+
+Het sentence-level model werd getraind op de FactNews-dataset om bias op zinsniveau te detecteren. Het document-level model werd afzonderlijk getraind op de NewsMediaBias-Plus dataset voor classificatie van volledige nieuwsartikelen.
+
 \subsection{Standaard evaluatiemetrieken}
 
 De prestaties van de modellen werden geëvalueerd met behulp van standaard classificatiemetrieken, waaronder \textit{accuracy}, \textit{precision}, \textit{recall} en de \textit{F1-score}. 
@@ -75,14 +95,74 @@ Deze metrieken werden berekend op de testsets van zowel de sentence-level als de
 
 \subsection{Vergelijking met bestaande tools}
 
-De resultaten van het model werden vergeleken met bestaande mediabias-tools, zoals \textit{Ground News} en \textit{Media Bias}. Hierbij werd nagegaan in welke mate de voorspellingen overeenkomen en waar verschillen optreden.
+De resultaten van het model werden vergeleken met bestaande mediabias-tools, zoals \textit{Ground News} en \textit{Media Bias}. Hierbij werd nagegaan in welke mate de globale voorspellingen van het model voor de \gls{hln}-dataset overeenkomen met de algemene biasclassificatie die deze tools toekennen aan \gls{hln}.
 
 \section{Implementatie van een browserextensie}
 \label{sec:implementatie-van-een-browserextensie}
 
-Er werd een browserextensie ontwikkeld in JavaScript om de partijdigheid van nieuwsartikelen automatisch te analyseren. De extensie verwerkt de DOM-structuur van een webpagina, extraheert de inhoud van het artikel en stuurt deze door naar het getrainde model.
+Tijdens het onderzoek werd een browserextensie in JavaScript ontwikkeld om de partijdigheid van nieuwsartikelen automatisch te analyseren. De extensie verwerkt de \gls{dom}-structuur van een webpagina, extraheert de inhoud van het artikel en voert inferentie uit met het getrainde model.
 
-De output van het model wordt visueel weergegeven binnen de webpagina. Hierbij wordt zowel een globale bias-score als een classificatie getoond. Indien een artikel als biased wordt geclassificeerd, worden zinnen die het sterkst bijdragen aan de uiteindelijke classificatie gemarkeerd, zodat de gebruiker inzicht krijgt in welke delen van de tekst als partijdig worden beschouwd.
+De extensie werd ontwikkeld als een Chrome-extensie en maakt gebruik van een lokaal ONNX-model dat rechtstreeks in de browser wordt uitgevoerd via ONNX Runtime Web. Hierdoor is geen externe server of API nodig om voorspellingen uit te voeren. De inferentie gebeurt volledig lokaal binnen de browseromgeving.
+
+Hiervoor werd het getrainde model uit de ontwikkelde pipeline omgezet naar een ONNX-formaat en vervolgens gekwantiseerd naar \texttt{INT8}. Door het toepassen van kwantisatie wordt de numerieke precisie van de modelgewichten verlaagd. Hierdoor neemt de opslaggrootte van het model aanzienlijk af en wordt de inferentiesnelheid in de browser verhoogd, zonder merkbaar prestatieverlies in de classificatietaak.
+
+\subsection{Werking van de extensie}
+
+Wanneer een gebruiker een artikel opent, wordt het artikel niet automatisch geanalyseerd. Moderne browsers leggen beveiligingsrestricties op die verhinderen dat browserextensies automatisch scripts injecteren zonder expliciete interactie van de gebruiker.
+
+Wanneer de gebruiker de extensie opent, worden eerst de tokenizer en de gekwantiseerde ONNX-modellen geladen. Vervolgens wordt de inhoud van het geopende \gls{hln}-artikel geëxtraheerd via de \gls{dom}-structuur van de webpagina.
+
+Na extractie van de tekst wordt eerst een document-level classificatie uitgevoerd. Indien het artikel als `Biased' wordt geclassificeerd, wordt aanvullend een sentence-level analyse uitgevoerd waarbij individuele zinnen afzonderlijk worden geëvalueerd op partijdigheid.
+
+De resultaten worden weergegeven in de popup van de extensie. Hierbij wordt zowel een globale bias-score als een classificatie van het artikel getoond. Daarnaast worden de zinnen met de hoogste bias-score gemarkeerd in het artikel zelf, zodat zichtbaar wordt welke tekstfragmenten het sterkst bijdragen aan de uiteindelijke classificatie.
+
+\subsection{Inferentieproces}
+
+Voor inferentie werd gebruikgemaakt van de gekwantiseerde versies van de getrainde modellen in ONNX-formaat. Het document-level model ontvangt de getokeniseerde tekst van het volledige artikel als invoer en genereert logits die via een softmax-functie worden omgezet naar een bias-score tussen 0 en 1.
+
+Indien deze score aangeeft dat het artikel als `Biased' wordt geclassificeerd, wordt aanvullend een sentence-level analyse uitgevoerd waarbij individuele zinnen afzonderlijk worden geclassificeerd op partijdigheid. De zinnen met de hoogste bias-score worden vervolgens weergegeven in de popup van de browserextensie en gemarkeerd in het artikel zelf. 
+
+De inferentie gebeurt volledig lokaal binnen de browser via ONNX Runtime Web. Hierdoor kan de extensie functioneren zonder externe inferentieserver.
+
+\subsection{Gebruikersinterface}
+
+De browserextensie bevat een popup-interface waarin de resultaten van de analyse worden weergegeven.
+
+Tijdens de analyse wordt eerst een laadscherm getoond met de titel van het artikel en een statusmelding die aangeeft dat het artikel wordt geanalyseerd, zoals weergegeven in Figuur \ref{fig:extension-inference}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{extension-inference.png}
+    \caption[Browserextensie tijdens analyse]{Browserextensie tijdens het analyseren van een \gls{hln}-artikel.}
+    \label{fig:extension-inference}
+\end{figure}
+
+Wanneer een artikel als `Not Biased' wordt geclassificeerd, toont de extensie de globale bias-score samen met een classificatie van het artikel, zoals weergegeven in Figuur \ref{fig:extension-not-biased}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{extension-not-biased.png}
+    \caption[Classificatie van een niet-partijdig artikel]{Resultaat van de browserextensie voor een artikel dat als `Not Biased' werd geclassificeerd.}
+    \label{fig:extension-not-biased}
+\end{figure}
+
+Wanneer een artikel als `Biased' wordt geclassificeerd, toont de extensie naast de globale bias-score ook de vijf zinnen met de hoogste bias-score, zoals weergegeven in Figuur \ref{fig:extension-biased}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\textwidth]{extension-biased.png}
+    \caption[Classificatie van een partijdig artikel]{Resultaat van de browserextensie voor een artikel dat als `Biased' werd geclassificeerd.}
+    \label{fig:extension-biased}
+\end{figure}
+
+Daarnaast worden de zinnen met de hoogste bias-score gemarkeerd binnen het artikel, zodat gebruikers kunnen zien welke delen van de tekst het sterkst bijdragen aan de classificatie, zoals weergegeven in Figuur \ref{fig:extension-sentences}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{extension-sentences.png}
+    \caption[Gemarkeerde zinnen in een artikel]{Visualisatie van gemarkeerde zinnen met een hoge bias-score binnen een \gls{hln}-artikel.}
+    \label{fig:extension-sentences}
+\end{figure}
 
 \section{Resultatenanalyse}
 \label{sec:resultatenanalyse}

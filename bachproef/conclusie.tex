@@ -5,7 +5,9 @@ Dit onderzoek had als doel het ontwikkelen van een proof-of-concept (\gls{poc}) 
 
 Op basis van de resultaten kan worden geconcludeerd dat het mogelijk is om \gls{hln}-artikelen automatisch te classificeren op basis van hun partijdigheid met behulp van de ontwikkelde pipeline. Het systeem verdeelt artikelen in de klassen `Not Biased' en `Biased', waarbij de volledige artikelinhoud de belangrijkste informatiebron vormt voor de classificatie. Hiermee wordt de centrale onderzoeksvraag beantwoord: een browserextensie kan worden ontwikkeld die \gls{hln}-artikelen automatisch classificeert op basis van partijdigheid.
 
-Het model is gevoelig voor linguïstische en inhoudelijke kenmerken in de tekst. Daarnaast is het behoud van semantische informatie binnen het classificatieproces essentieel voor een bruikbare detectie van bias.
+Uit de literatuurstudie blijkt dat vooral ideologie bias, spin bias, gatekeeping, coverage bias en statement bias relevant zijn binnen nieuwsartikelen. Deze vormen worden in de praktijk voornamelijk zichtbaar via taalgebruik, selectie en framing.
+
+Het model is gevoelig voor linguïstische en inhoudelijke kenmerken in de tekst. Daarnaast is het behoud van semantische informatie binnen het classificatieproces essentieel voor een bruikbare detectie van bias. In de literatuur wordt voornamelijk gebruikgemaakt van contextuele embeddings zoals \gls{bert} en \gls{elmo}, aangezien deze modellen in staat zijn om woordbetekenissen afhankelijk van context te representeren.
 
 Het sentence-level model wordt beperkt door een klasse-ongelijkheid in de trainingsdata, waardoor de detectie van de minder voorkomende klasse `Biased' minder accuraat verloopt. Hierdoor is de betrouwbaarheid van het aanduiden van zinnen die het sterkst bijdragen aan de classificatie beperkt. Het document-level model vertoont een meer gebalanceerde prestatie over beide klassen.
 

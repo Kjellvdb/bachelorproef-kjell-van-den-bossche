@@ -1,0 +1,42 @@
+\chapter{Discussie}
+\label{ch:discussie}
+
+\section{Interpretatie van de resultaten}
+
+De resultaten tonen aan dat automatische detectie van journalistieke bias op basis van tekstuele kenmerken mogelijk is. Vooral het document-level model behaalde relatief stabiele prestaties, met een macro F1-score van 0.71 en een gemiddelde confidence score van 0.77.
+
+De toepassing op \gls{hln}-artikelen wijst erop dat het model in staat is om linguïstische bias-signalen te detecteren in reële nieuwsartikelen. Vooral opinieartikels werden vaak als `Biased' geclassificeerd, wat overeenkomt met de verwachting dat dergelijke artikels meer subjectieve formuleringen bevatten.
+
+Daarnaast tonen de voorbeelden aan dat het model voornamelijk gevoelig is voor woordkeuze, framing en taalgebruik. Woorden zoals ``chaos'', ``felle uithalen'' en ``lelijke kamelendeals'' werden consistent geassocieerd met hogere bias-scores.
+
+De resultaten sluiten gedeeltelijk aan bij het onpartijdigheidsrapport van de \gls{vrm} \autocite{VanAelst2024}, waarin wordt vastgesteld dat media binnen DPG Media bepaalde politieke partijen meer spreektijd geven dan andere. Hoewel dit onderzoek geen spreektijd of politieke voorkeur analyseert, tonen de resultaten wel aan dat bepaalde artikels duidelijke linguïstische bias-signalen bevatten.
+
+\section{Bijdrage aan mediaonderzoek}
+
+Dit onderzoek wijst erop dat machine learning kan worden ingezet als aanvulling binnen mediaonderzoek. Het biedt een geautomatiseerde manier om grote hoeveelheden nieuwsartikelen te analyseren op linguïstische bias-signalen. Hierdoor kunnen selectieve woordkeuze en subjectief taalgebruik sneller worden geïdentificeerd en verder onderzocht.
+
+Hoewel het model geen politieke voorkeur of ideologische richting voorspelt, toont het onderzoek aan dat automatische systemen wel degelijk in staat zijn om linguïstische signalen van bias te detecteren binnen journalistieke teksten. Dit kan onderzoekers ondersteunen bij verdere analyse van mediacontent, waarbij automatische output dient als hulpmiddel in plaats van als definitieve beoordeling.
+
+\section{Beperkingen van het onderzoek}
+
+Het onderzoek bevat verschillende beperkingen.
+
+Een eerste beperking is de kwaliteit en samenstelling van de gebruikte datasets. Vooral de FactNews-dataset bevat een sterke klasse-ongelijkheid, waardoor het sentence-level model minder goed presteert op de minderheidsklasse `Biased'. Dit heeft een negatieve invloed op de precision en de algemene betrouwbaarheid van biasdetectie op zinsniveau.
+
+Daarnaast analyseert het model uitsluitend tekstuele kenmerken binnen individuele artikels. Complexere vormen van journalistieke partijdigheid worden niet meegenomen in de analyse.
+
+Een bijkomende beperking is de performantie van de browserextensie. De inference van een volledig artikel duurt momenteel meerdere minuten, wat de extensie in de praktijk niet bruikbaar maakt. Dit komt voornamelijk doordat het model lokaal in de browser wordt uitgevoerd, waar beperkte rekenkracht en geheugen beschikbaar zijn.
+
+Een mogelijke oplossing hiervoor is het verplaatsen van de inferencelogica naar een externe server met GPU-ondersteuning. De browserextensie zou in dat geval via een API communiceren met de server, waardoor voorspellingen aanzienlijk sneller kunnen worden uitgevoerd. Binnen de scope van dit onderzoek was het echter niet mogelijk om een dergelijke GPU-infrastructuur op te zetten.
+
+\section{Aanbevelingen voor toekomstig onderzoek}
+
+Toekomstig onderzoek kan de pipeline verder uitbreiden met bijkomende vormen van biasdetectie.
+
+Een mogelijke uitbreiding is het analyseren van complexere vormen van bias, zoals het gebruik van bepaalde afbeeldingen, selectie van bronnen of terugkerende biaspatronen over meerdere artikels van dezelfde journalist.
+
+Daarnaast kunnen grotere en meer gebalanceerde datasets de prestaties van de modellen verder verbeteren. Vooral voor sentence-level biasdetectie blijft bijkomende gelabelde trainingsdata noodzakelijk om de prestaties op de minderheidsklasse te verhogen.
+
+In toekomstig onderzoek kunnen technieken om klasse-onbalans aan te pakken worden onderzocht, zoals oversampling van de minderheidsklasse, het toepassen van class weighting tijdens training, of het genereren van synthetische voorbeelden via data augmentation.
+
+Tot slot kan de browserextensie verder ontwikkeld worden door de inferencelogica te verplaatsen naar een externe GPU-server. Hierdoor zouden voorspellingen aanzienlijk sneller uitgevoerd kunnen worden, wat de praktische bruikbaarheid van de extensie sterk zou verbeteren.
