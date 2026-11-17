@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
     texlive-latex-base \
@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
     latexmk \
     fontconfig \
     fonts-dejavu-core \
-    && pip install --no-cache-dir pygments \
     && rm -rf /var/lib/apt/lists/*
 
 RUN ln -sf /usr/bin/python3 /usr/bin/python
